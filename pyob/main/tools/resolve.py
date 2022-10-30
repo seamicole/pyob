@@ -2,44 +2,34 @@
 # │ GENERAL IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-import re
+from typing import Optional, TYPE_CHECKING
 
-from typing import List
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ PROJECT IMPORTS
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+if TYPE_CHECKING:
+
+    import pyob.main.classes.pyob
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ PASCALIZE
+# │ RESOLVE STRING FIELD
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def pascalize(string: str, delimiter: str = " ") -> str:
-    """Converts a string to Pascal case based on a delimiter"""
+def resolve_string_field(pyob: "pyob.main.classes.pyob.PyOb") -> Optional[str]:
+    """Resolves and returns the best applicable string field for a PyOb instance"""
 
-    # Split string by delimiter
-    string = [s.strip() for s in string.split(delimiter)]
+    # Initialize string field as PyObMeta.string
+    # i.e. The field explicitly defined by the user
+    string_field = pyob.PyObMeta.string
 
-    # Capitalize each word in split string
-    string = [s[0].upper() + s[1:] for s in string if s]
-
-    # Join string
-    string = "".join(string)
-
-    # Return string
-    return string
-
-
-# ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ SPLIT PASCAL
-# └─────────────────────────────────────────────────────────────────────────────────────
-
-
-def split_pascal(string: str) -> List[str]:
-    """Splits a string by Pascal case"""
-
-    # Match string against Pascal case
-    matches = re.finditer(
-        ".+?(?:(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|$)", string
+    # Default string field to the first available key if null
+    # Provides a meaningful and unique string value for each PyOb
+    string_field = string_field or (
+        pyob.PyObMeta.keys[0] if pyob.PyObMeta.keys else None
     )
 
-    # Return string split by matches
-    return [m.group(0) for m in matches]
+    # Return the string field
+    return string_field

@@ -23,7 +23,7 @@ from pyob.tools.string import pascalize
 @example(words=["foo", "bar"], delimiter=" ")  # "foo bar" --> "FooBar"
 @example(words=["foo", "bar"], delimiter="-")  # "foo-bar" --> "FooBar"
 @example(words=["foo", "bar"], delimiter="_")  # "foo_bar" --> "FooBar"
-@example(words=["foo", "BAR"], delimiter="_")  # "foo_API" --> "FooBAR"
+@example(words=["foo", "BAR"], delimiter="_")  # "foo_BAR" --> "FooBAR"
 def test_pascalize(words: List[str], delimiter: str) -> None:
     """Tests the expected output of the pyob.tools.string.pascalize function"""
 

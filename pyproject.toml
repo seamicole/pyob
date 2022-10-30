@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pyob"
+version = "0.1.0"
+description = "A high-level runtime object manager for Python 3 and above."
+authors = ["Sean Michael O'Leary <seamicole@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[tool.poetry.group.dev.dependencies]
+notebook = "^6.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

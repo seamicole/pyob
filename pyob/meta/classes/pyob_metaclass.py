@@ -92,7 +92,8 @@ class PyObMetaclass(type):
 
                 # Nullify label fields
                 # If the current PyOb class does not define a PyObMeta class
-                # do NOT inherit labels from the parent PyObMeta class
+                # DO NOT inherit labels from the parent PyObMeta class
+                # Labels should default to the current Class.__name__
                 PyObMeta.label_singular = None
                 PyObMeta.label_plural = None
 

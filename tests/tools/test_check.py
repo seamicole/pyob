@@ -3,7 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob import PyOb
-from pyob.tools.check import is_pyob_instance
+from pyob.tools.check import is_pyob_instance, is_pyob_store_instance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -33,3 +33,27 @@ def test_is_pyob_instance() -> None:
 
     # Assert that non-PyOb instance returns False
     assert is_pyob_instance(non_pyob) is False
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ TEST IS PYOB STORE INSTANCE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+def test_is_pyob_store_instance() -> None:
+    """
+    Tests the expected output of the pyob.tools.check.is_pyob_store_instance function
+    """
+
+    # Define a PyOb class
+    class PyObClass(PyOb):
+        """A PyOb class"""
+
+    # Initialize a PyOb instance
+    pyob = PyObClass()
+
+    # Assert that PyObStore instance returns True
+    assert is_pyob_store_instance(pyob.PyObMeta.store) is True
+
+    # Assert that PyOb instance returns False
+    assert is_pyob_store_instance(pyob) is False

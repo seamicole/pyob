@@ -8,8 +8,9 @@ import inflect
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.meta.classes.pyob_meta_base import PyObMetaBase
+from pyob.meta.tools.clone import clone_pyob_meta
 from pyob.store.classes.pyob_store import PyObStore
+from pyob.tools.check import is_pyob_store_instance
 from pyob.tools.string import split_pascal
 
 
@@ -32,26 +33,17 @@ class PyObMetaclass(type):
         # │ PYOB META
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Record the initial PyOb meta ID
-        # To compare against parent PyOb meta classes below
+        # Record the initial PyObMeta object ID
+        # To compare against parent PyObMeta classes below
         # Some attributes such as labels should not be inherited!
         initial_pyob_meta_id = id(cls.PyObMeta)
 
-        # Get metaclass dictionary
-        # i.e. A blank copy of the PyObMetaBase attributes
-        # To ensure every PyObMeta class shares a common set of attributes and methods
-        pyob_meta_dict = dict(PyObMetaBase.__dict__)
+        # Clone the initial PyObMeta object
+        # So that it occupies a different address in memory and therefore does not
+        # propogate changes to the PyObMeta class of parent PyOb classes if inherited!
+        cls.PyObMeta = clone_pyob_meta(cls.PyObMeta)
 
-        # Update PyObMeta dictionary with the attributes of the current class PyObMeta
-        # To ensure the metaclass dictionary inherits all the attributes and methods
-        # defined in the current class PyObMeta
-        pyob_meta_dict.update(dict(cls.PyObMeta.__dict__))
-
-        # Create a new reference for PyObMeta so each PyOb class has its own PyObMeta
-        # Otherwise we will end up reassigning mutable attributes such as the store
-        cls.PyObMeta = type("PyObMeta", cls.PyObMeta.__bases__, pyob_meta_dict)
-
-        # Get the freshly initialized PyObMeta
+        # Retrieve the newly cloned PyObMeta class
         PyObMeta = cls.PyObMeta
 
         # ┌─────────────────────────────────────────────────────────────────────────────
@@ -86,7 +78,7 @@ class PyObMetaclass(type):
 
             # Continue if parent PyObMeta store is not a PyOb store
             # i.e. Definitely not a PyOb class
-            if not isinstance(parent_store, PyObStore):
+            if not is_pyob_store_instance(parent_store):
                 continue
 
             # Add base class to Parents of current PyObMeta class

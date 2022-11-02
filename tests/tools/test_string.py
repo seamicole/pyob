@@ -19,7 +19,10 @@ from pyob.tools.string import pascalize, split_pascal
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-@given(words=lists(text(alphabet=ascii_letters)), delimiter=sampled_from(punctuation))
+@given(
+    words=lists(text(alphabet=ascii_letters, max_size=8)),
+    delimiter=sampled_from(punctuation),
+)
 @example(words=["foo", "bar"], delimiter=" ")  # "foo bar" --> "FooBar"
 @example(words=["foo", "bar"], delimiter="-")  # "foo-bar" --> "FooBar"
 @example(words=["foo", "bar"], delimiter="_")  # "foo_bar" --> "FooBar"

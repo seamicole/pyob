@@ -129,6 +129,10 @@ class PyObMetaclass(type):
             # Initialize inflector
             inflector = inflect.engine()
 
+            # Disable default handling of proper nouns
+            # Otherwise Country will pluralize to Countrys instead of Countries
+            inflector.classical(names=0)
+
             # Pluralize the singular label
             label_plural = inflector.plural(label_singular)
 

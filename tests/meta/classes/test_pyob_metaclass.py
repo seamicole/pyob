@@ -242,3 +242,71 @@ class TestPyObMetaclass:
         # Assert that the child labels are still derived from the class name
         assert PyObClassChild3.PyObMeta.label_singular == "Py Ob Class Child3"
         assert PyObClassChild3.PyObMeta.label_plural == "Py Ob Class Child3s"
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT LABEL ASSIGNMENT
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_label_assignment(self):
+        """Tests that the init method assigns PyObMeta labels as expected"""
+
+        # Define a dummy PyObClass
+        class Nation(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                label_singular = "Country"
+                label_plural = "Countries"
+
+        # Assert that PyObMeta labels are retained
+        assert Nation.PyObMeta.label_singular == "Country"
+        assert Nation.PyObMeta.label_plural == "Countries"
+
+        # Define a dummy PyObClass
+        class Nation(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are generated according to class name
+        assert Nation.PyObMeta.label_singular == "Nation"
+        assert Nation.PyObMeta.label_plural == "Nations"
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT LABEL PLURALIZATION
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_label_pluralization(self):
+        """Tests that generated PyObMeta labels use the correct plural inflections"""
+
+        # Define a dummy PyObClass
+        class Ant(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are generated according to class name
+        assert Ant.PyObMeta.label_singular == "Ant"
+        assert Ant.PyObMeta.label_plural == "Ants"
+
+        # Define a dummy PyObClass
+        class Box(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are generated according to class name
+        assert Box.PyObMeta.label_singular == "Box"
+        assert Box.PyObMeta.label_plural == "Boxes"
+
+        # Define a dummy PyObClass
+        class City(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are generated according to class name
+        assert City.PyObMeta.label_singular == "City"
+        assert City.PyObMeta.label_plural == "Cities"
+
+        # Define a dummy PyObClass
+        class Ditch(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are generated according to class name
+        assert Ditch.PyObMeta.label_singular == "Ditch"
+        assert Ditch.PyObMeta.label_plural == "Ditches"

@@ -1,9 +1,17 @@
 # ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ GENERAL IMPORTS
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+from beartype.door import is_bearable
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 import pyob.main.classes.pyob as pyob  # Protects against circular imports
 import pyob.store.classes.pyob_store as pyob_store  # Protects against circular imports
+
+from pyob.exceptions import InvalidTypeError
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -11,11 +19,11 @@ import pyob.store.classes.pyob_store as pyob_store  # Protects against circular 
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def is_pyob_instance(item) -> bool:
+def is_pyob_instance(item, **kwargs) -> bool:
     """Returns a boolean of whether an item is a PyOb instance"""
 
     # Return boolean of whether item is a PyOb instance
-    return isinstance(item, pyob.PyOb)
+    return is_type(item, pyob.PyOb, **kwargs)
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -23,8 +31,46 @@ def is_pyob_instance(item) -> bool:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def is_pyob_store_instance(item) -> bool:
+def is_pyob_store_instance(item, **kwargs) -> bool:
     """Returns a boolean of whether an item is a PyObStore instance"""
 
     # Return boolean of whether item is a PyObStore instance
-    return isinstance(item, pyob_store.PyObStore)
+    return is_type(item, pyob_store.PyObStore, **kwargs)
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ IS TYPE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+def is_type(item, annotation, raise_if=None, message=None) -> bool:
+    """Returns a boolean of whether an item conforms to a type annotation"""
+
+    # Determine if item conforms to annotation
+    _is_type = is_bearable(item, annotation)
+
+    # Determine if should raise
+    should_raise = (_is_type is True and raise_if is True) or (
+        _is_type is False and raise_if is False
+    )
+
+    # Check if should raise an InvalidTypeError
+    if should_raise:
+
+        # Initialize message
+        message = (
+            message
+            if message is not None
+            else (
+                f"Invalid type encountered!"
+                f"\n\nExpected: {annotation}"
+                f"\nReceived: {type(item)}"
+                f"\nVariable: {item}"
+            )
+        )
+
+        # Raise InvalidTypeError
+        raise InvalidTypeError(message)
+
+    # Return boolean of whether item conforms to annotation
+    return _is_type

@@ -20,14 +20,14 @@ class TestPyObMetaclass:
     def test_init_clones_pyob_meta(self):
         """Tests that the definition of a new PyOb class always clones a PyObStore"""
 
-        # Define a parent PyObClass
+        # Define a parent PyOb class
         class PyObClassParent(PyOb):
             """A dummy PyOb class"""
 
             class PyObMeta:
                 """PyObMeta Class"""
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild1(PyOb):
             """A dummy PyOb class"""
 
@@ -35,7 +35,7 @@ class TestPyObMetaclass:
         # are given their own PyObMeta object in memory
         assert id(PyObClassChild1.PyObMeta) != id(PyObClassParent.PyObMeta)
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild2(PyOb):
             """A dummy PyOb class"""
 
@@ -53,14 +53,14 @@ class TestPyObMetaclass:
     def test_init_creates_store(self):
         """Tests that the definition of a new PyOb class always creates a new store"""
 
-        # Define a parent PyObClass
+        # Define a parent PyOb class
         class PyObClassParent(PyOb):
             """A dummy PyOb class"""
 
             class PyObMeta:
                 """PyObMeta Class"""
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild1(PyOb):
             """A dummy PyOb class"""
 
@@ -68,7 +68,7 @@ class TestPyObMetaclass:
         # are given their own PyObMeta store objects in memory
         assert id(PyObClassChild1.PyObMeta.store) != id(PyObClassParent.PyObMeta.store)
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild2(PyOb):
             """A dummy PyOb class"""
 
@@ -86,7 +86,7 @@ class TestPyObMetaclass:
     def test_init_assigns_parents(self):
         """Tests that parents of a PyOb class are assigned in its PyObMeta"""
 
-        # Define a parent PyObClass
+        # Define a parent PyOb class
         class PyObClassParent1(PyOb):
             """A dummy PyOb class"""
 
@@ -96,11 +96,11 @@ class TestPyObMetaclass:
         # Assert that the only parent of the parent class is PyOb
         assert PyObClassParent1.PyObMeta.Parents[0] is PyOb
 
-        # Define another parent PyObClass
+        # Define another parent PyOb class
         class PyObClassParent2(PyOb):
             """A dummy PyOb class"""
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild(PyObClassParent1, PyObClassParent2):
             """A dummy PyOb class"""
 
@@ -121,7 +121,7 @@ class TestPyObMetaclass:
         parent_lists = [id(parent_list) for parent_list in parent_lists]
 
         # Assert that all these lists are distinct
-        # i.e. No two PyObClasses share a parents list
+        # i.e. No two PyOb classes share a parents list
         assert len(set(parent_lists)) == len(parent_lists)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -131,7 +131,7 @@ class TestPyObMetaclass:
     def test_init_assigns_children(self):
         """Tests that children of a PyOb class are assigned in its parent PyObMetas"""
 
-        # Define a parent PyObClass
+        # Define a parent PyOb class
         class PyObClassParent1(PyOb):
             """A dummy PyOb class"""
 
@@ -141,11 +141,11 @@ class TestPyObMetaclass:
         # Assert that the parent class currently has no children
         assert len(PyObClassParent1.PyObMeta.Children) == 0
 
-        # Define another parent PyObClass
+        # Define another parent PyOb class
         class PyObClassParent2(PyOb):
             """A dummy PyOb class"""
 
-        # Define a child PyObClass
+        # Define a child PyOb class
         class PyObClassChild1(PyObClassParent1, PyObClassParent2):
             """A dummy PyOb class"""
 
@@ -158,7 +158,7 @@ class TestPyObMetaclass:
             # Assert that the child class is the first child class
             assert PyObClassParent.PyObMeta.Children[0] is PyObClassChild1
 
-        # Define another child PyObClass
+        # Define another child PyOb class
         class PyObClassChild2(PyObClassParent2):
             """A dummy PyOb class"""
 
@@ -186,7 +186,7 @@ class TestPyObMetaclass:
         child_lists = [id(child_list) for child_list in child_lists]
 
         # Assert that all these lists are distinct
-        # i.e. No two PyObClasses share a childs list
+        # i.e. No two PyOb classes share a childs list
         assert len(set(child_lists)) == len(child_lists)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -196,7 +196,7 @@ class TestPyObMetaclass:
     def test_init_labels_do_not_inherit(self):
         """Tests to ensure that labels do not inherit from parent PyObMeta classes"""
 
-        # Define a parent PyObClass
+        # Define a parent PyOb class
         class PyObClassParent(PyOb):
             """A dummy PyOb class"""
 
@@ -210,7 +210,7 @@ class TestPyObMetaclass:
         assert PyObClassParent.PyObMeta.label_singular == "Parent"
         assert PyObClassParent.PyObMeta.label_plural == "Parents"
 
-        # Define a child PyObClass that defines its own labels
+        # Define a child PyOb class that defines its own labels
         class PyObClassChild1(PyObClassParent):
             """A dummy PyOb class"""
 
@@ -224,7 +224,7 @@ class TestPyObMetaclass:
         assert PyObClassChild1.PyObMeta.label_singular == "Kid"
         assert PyObClassChild1.PyObMeta.label_plural == "Kids"
 
-        # Define another child PyObClass that defines as PyObMeta but not labels
+        # Define another child PyOb class that defines as PyObMeta but not labels
         class PyObClassChild2(PyObClassParent):
             """A dummy PyOb class"""
 
@@ -235,7 +235,7 @@ class TestPyObMetaclass:
         assert PyObClassChild2.PyObMeta.label_singular == "Py Ob Class Child2"
         assert PyObClassChild2.PyObMeta.label_plural == "Py Ob Class Child2s"
 
-        # Define another child PyObClass that defines no PyObMeta
+        # Define another child PyOb class that defines no PyObMeta
         class PyObClassChild3(PyObClassParent):
             """A dummy PyOb class"""
 
@@ -250,7 +250,7 @@ class TestPyObMetaclass:
     def test_init_label_assignment(self):
         """Tests that the init method assigns PyObMeta labels as expected"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class Nation(PyOb):
             """A dummy PyOb class"""
 
@@ -264,11 +264,36 @@ class TestPyObMetaclass:
         assert Nation.PyObMeta.label_singular == "Country"
         assert Nation.PyObMeta.label_plural == "Countries"
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class Nation(PyOb):
             """A dummy PyOb class"""
 
-        # Assert that PyObMeta labels are generated according to class name
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                label_singular = "Country"
+
+        # Assert that PyObMeta plural label derives from the singular label
+        assert Nation.PyObMeta.label_plural == "Countries"
+
+        # Define a dummy PyOb class
+        class Nation(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                label_plural = "Countries"
+
+        # Assert that PyObMeta singular label does not derive from the plural label
+        # As the default behavior; could consider changing this later
+        assert Nation.PyObMeta.label_singular == "Nation"
+
+        # Define a dummy PyOb class
+        class Nation(PyOb):
+            """A dummy PyOb class"""
+
+        # Assert that PyObMeta labels are created according to class name
         assert Nation.PyObMeta.label_singular == "Nation"
         assert Nation.PyObMeta.label_plural == "Nations"
 
@@ -277,36 +302,36 @@ class TestPyObMetaclass:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     def test_init_label_pluralization(self):
-        """Tests that generated PyObMeta labels use the correct plural inflections"""
+        """Tests that created PyObMeta labels use the correct plural inflections"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class Ant(PyOb):
             """A dummy PyOb class"""
 
-        # Assert that PyObMeta labels are generated according to class name
+        # Assert that PyObMeta labels are created according to class name
         assert Ant.PyObMeta.label_singular == "Ant"
         assert Ant.PyObMeta.label_plural == "Ants"
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class Box(PyOb):
             """A dummy PyOb class"""
 
-        # Assert that PyObMeta labels are generated according to class name
+        # Assert that PyObMeta labels are created according to class name
         assert Box.PyObMeta.label_singular == "Box"
         assert Box.PyObMeta.label_plural == "Boxes"
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class City(PyOb):
             """A dummy PyOb class"""
 
-        # Assert that PyObMeta labels are generated according to class name
+        # Assert that PyObMeta labels are created according to class name
         assert City.PyObMeta.label_singular == "City"
         assert City.PyObMeta.label_plural == "Cities"
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class Ditch(PyOb):
             """A dummy PyOb class"""
 
-        # Assert that PyObMeta labels are generated according to class name
+        # Assert that PyObMeta labels are created according to class name
         assert Ditch.PyObMeta.label_singular == "Ditch"
         assert Ditch.PyObMeta.label_plural == "Ditches"

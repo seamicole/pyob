@@ -1,17 +1,11 @@
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ GENERAL IMPORTS
-# └─────────────────────────────────────────────────────────────────────────────────────
-
-import inflect
-
-# ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.meta.tools.clone import clone_pyob_meta
+from pyob.meta.tools.create import create_label_plural, create_label_singular
 from pyob.store.classes.pyob_store import PyObStore
 from pyob.tools.check import is_pyob_store_instance
-from pyob.tools.string import split_pascal
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -97,44 +91,19 @@ class PyObMetaclass(type):
                 PyObMeta.label_singular = None
                 PyObMeta.label_plural = None
 
-        # ┌─────────────────────────────────────────────────────────────────────────────
-        # │ PYOB CLASS SINGULAR LABEL
-        # └─────────────────────────────────────────────────────────────────────────────
-
-        # Get singular label from PyObMeta
-        label_singular = PyObMeta.label_singular
-
-        # Check if singular label is null
-        if not label_singular:
-
-            # Default singular label to derivative of Class.__name__
-            label_singular = " ".join(split_pascal(cls.__name__))
-
-            # Strip singular label
-            label_singular = label_singular.strip()
-
-            # Set singular label on PyObMeta
-            PyObMeta.label_singular = label_singular
+        # NOTE: The above logic contains various side effects and is therefore not
+        # modularized into a separate helper function!
 
         # ┌─────────────────────────────────────────────────────────────────────────────
-        # │ PYOB CLASS PLURAL LABEL
+        # │ LABELS
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Get plural label from PyObMeta
-        label_plural = PyObMeta.label_plural
+        # Initialize singular label
+        PyObMeta.label_singular = PyObMeta.label_singular or create_label_singular(
+            PyObClass=cls
+        )
 
-        # Check if plural label is null
-        if not label_plural:
-
-            # Initialize inflector
-            inflector = inflect.engine()
-
-            # Disable default handling of proper nouns
-            # Otherwise Country will pluralize to Countrys instead of Countries
-            inflector.classical(names=0)
-
-            # Pluralize the singular label
-            label_plural = inflector.plural(label_singular)
-
-            # Set plural label on PyObMeta
-            PyObMeta.label_plural = label_plural
+        # Initialize plural label
+        PyObMeta.label_plural = PyObMeta.label_plural or create_label_plural(
+            PyObClass=cls
+        )

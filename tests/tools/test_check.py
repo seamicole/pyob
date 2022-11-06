@@ -26,7 +26,7 @@ def test_is_pyob_instance() -> None:
 
     # Define a non-PyOb class
     class NonPyObClass:
-        """A non-PyOb class"""
+        """A non-PyObClass"""
 
     # Initialize a non-PyOb instance
     non_pyob = NonPyObClass()

@@ -2,14 +2,13 @@
 # │ GENERAL IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 if TYPE_CHECKING:
-
     import pyob.main.classes.pyob
 
 
@@ -18,7 +17,7 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def resolve_string_field(pyob: "pyob.main.classes.pyob.PyOb") -> Optional[str]:
+def resolve_string_field(pyob: "pyob.main.classes.pyob.PyOb") -> str | None:
     """Resolves and returns the best applicable string field for a PyOb instance"""
 
     # Initialize string field as PyObMeta.string

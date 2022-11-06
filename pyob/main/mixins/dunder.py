@@ -2,7 +2,7 @@
 # │ GENERAL IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -48,7 +48,7 @@ class PyObDunderMixin:
     # │ __STR__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __str__(self, root: Optional["pyob.main.classes.pyob.PyOb"] = None) -> str:
+    def __str__(self, root: "pyob.main.classes.pyob.PyOb" | None = None) -> str:
         """String Dunder Method"""
 
         # Initialize root PyOb instance

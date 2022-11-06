@@ -43,7 +43,9 @@ def is_pyob_store_instance(item, **kwargs) -> bool:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def is_type(item, annotation, raise_if=None, message=None) -> bool:
+def is_type(
+    item, annotation, raise_if: bool | None = None, message: str | None = None
+) -> bool:
     """Returns a boolean of whether an item conforms to a type annotation"""
 
     # Determine if item conforms to annotation
@@ -57,16 +59,18 @@ def is_type(item, annotation, raise_if=None, message=None) -> bool:
     # Check if should raise an InvalidTypeError
     if should_raise:
 
-        # Initialize message
+        # Define annotation key
+        annotation_key = "Unwanted" if raise_if is True else "Expected"
+
+        # Add quotations if item is string
+        item = f"'{item}'" if type(item) is str else item
+
+        # Construct message
         message = (
-            message
-            if message is not None
-            else (
-                f"Invalid type encountered!"
-                f"\n\nExpected: {annotation}"
-                f"\nReceived: {type(item)}"
-                f"\nVariable: {item}"
-            )
+            "Invalid type encountered!"
+            f"\n\n{annotation_key}: {annotation}"
+            f"\nReceived: {type(item)}"
+            f"\nVariable: {item}" + (("\n\n" + message) if message else "")
         )
 
         # Raise InvalidTypeError

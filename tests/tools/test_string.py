@@ -5,7 +5,6 @@
 from hypothesis import example, given
 from hypothesis.strategies import lists, sampled_from, text
 from string import ascii_letters, ascii_lowercase, punctuation
-from typing import List
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -27,7 +26,7 @@ from pyob.tools.string import pascalize, split_pascal
 @example(words=["foo", "bar"], delimiter="-")  # "foo-bar" --> "FooBar"
 @example(words=["foo", "bar"], delimiter="_")  # "foo_bar" --> "FooBar"
 @example(words=["foo", "BAR"], delimiter="_")  # "foo_BAR" --> "FooBAR"
-def test_pascalize(words: List[str], delimiter: str) -> None:
+def test_pascalize(words: list[str], delimiter: str) -> None:
     """Tests the expected output of the pyob.tools.string.pascalize function"""
 
     # Remove empty strings from words
@@ -50,7 +49,7 @@ def test_pascalize(words: List[str], delimiter: str) -> None:
 
 @given(words=lists(text(alphabet=ascii_lowercase)))
 @example(words=["Foo", "Bar"])  # "FooBar" --> ["Foo", "Bar"]
-def test_split_pascal(words: List[str]) -> None:
+def test_split_pascal(words: list[str]) -> None:
     """Tests the expected output of the pyob.tools.string.split_pascal function"""
 
     # Remove empty strings from words

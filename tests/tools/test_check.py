@@ -10,7 +10,12 @@ import pytest
 
 from pyob import PyOb
 from pyob.exceptions import InvalidTypeError
-from pyob.tools.check import is_pyob_instance, is_pyob_store_instance, is_type
+from pyob.tools.check import (
+    is_pyob_instance,
+    is_pyob_store_instance,
+    is_sequence,
+    is_type,
+)
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -64,6 +69,30 @@ def test_is_pyob_store_instance() -> None:
 
     # Assert that PyOb instance returns False
     assert is_pyob_store_instance(pyob) is False
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ TEST IS SEQUENCE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+def test_is_sequence() -> None:
+    """Tests the expected output of the pyob.tools.check.is_sequence function"""
+
+    # Define items
+    items = (1, "one", True)
+
+    # Assert that a list of items is a sequence
+    assert is_sequence(list(items)) is True
+
+    # Assert that a set of items is a sequence
+    assert is_sequence(set(items)) is True
+
+    # Assert that a tuple of items is a sequence
+    assert is_sequence(tuple(items)) is True
+
+    # Assert that a dictionary if items is not a sequence
+    assert is_sequence({"one": 1, 1: True, "True": "one"}) is False
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

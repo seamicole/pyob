@@ -12,6 +12,7 @@ import pyob.main.classes.pyob as pyob  # Protects against circular imports
 import pyob.store.classes.pyob_store as pyob_store  # Protects against circular imports
 
 from pyob.exceptions import InvalidTypeError
+from pyob.types import Sequence
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -36,6 +37,18 @@ def is_pyob_store_instance(item, **kwargs) -> bool:
 
     # Return boolean of whether item is a PyObStore instance
     return is_type(item, pyob_store.PyObStore, **kwargs)
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ IS SEQUENCE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+def is_sequence(item, **kwargs):
+    """Returns a boolean of whether an item is a sequence"""
+
+    # Return boolean of whether item is a sequence
+    return is_type(item, Sequence, **kwargs)
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

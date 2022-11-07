@@ -5,7 +5,8 @@
 from pyob.meta.tools.clone import clone_pyob_meta
 from pyob.meta.tools.create import create_label_plural, create_label_singular
 from pyob.store.classes.pyob_store import PyObStore
-from pyob.tools.check import is_pyob_store_instance
+from pyob.tools.check import is_pyob_store_instance, is_type
+from pyob.types import Key, Keys
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -93,6 +94,53 @@ class PyObMetaclass(type):
 
         # NOTE: The above logic contains various side effects and is therefore not
         # modularized into a separate helper function!
+
+        # ┌─────────────────────────────────────────────────────────────────────────────
+        # │ KEYS
+        # └─────────────────────────────────────────────────────────────────────────────
+
+        # Get key from current PyObMeta
+        # Not a native PyObMeta attribute
+        # Can be used as a user-facing shortcut
+        key = getattr(PyObMeta, "key", ())
+
+        # Assert that key is a tuple of strings
+        is_type(
+            key,
+            Key | Keys,
+            raise_if=False,
+            message="PyObClass.PyObMeta.key expects a string!",
+        )
+
+        # Convert key to a tuple of strings
+        key = (key,) if type(key) is str else tuple(key)
+
+        # Get keys from current PyObMeta
+        keys = PyObMeta.keys or ()
+
+        # Assert that keys is a tuple of strings
+        is_type(
+            key,
+            Key | Keys,
+            raise_if=False,
+            message="PyObClass.PyObMeta.keys expects a tuple of strings!",
+        )
+
+        # Ensure that keys is a tuple of strings
+        keys = (keys,) if type(keys) is str else tuple(keys)
+
+        # Combine keys
+        keys = key + keys
+
+        # Merge parent PyObMeta keys into current PyObMeta keys
+        # This ensures that all PyOb subclasses inherit their parents' keys
+        keys = sum([Parent.PyObMeta.keys for Parent in PyObMeta.Parents] + [keys], ())
+
+        # Remove any duplicate keys
+        # keys = deduplicate(keys)
+
+        # Set PyObMeta.keys
+        PyObMeta.keys = keys
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ LABELS

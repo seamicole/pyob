@@ -6,6 +6,7 @@ from pyob.meta.tools.clone import clone_pyob_meta
 from pyob.meta.tools.create import create_label_plural, create_label_singular
 from pyob.store.classes.pyob_store import PyObStore
 from pyob.tools.check import is_pyob_store_instance, is_type
+from pyob.tools.sequence import deduplicate
 from pyob.types import Key, Keys
 
 
@@ -120,7 +121,7 @@ class PyObMetaclass(type):
 
         # Assert that keys is a tuple of strings
         is_type(
-            key,
+            keys,
             Key | Keys,
             raise_if=False,
             message="PyObClass.PyObMeta.keys expects a tuple of strings!",
@@ -137,7 +138,7 @@ class PyObMetaclass(type):
         keys = sum([Parent.PyObMeta.keys for Parent in PyObMeta.Parents] + [keys], ())
 
         # Remove any duplicate keys
-        # keys = deduplicate(keys)
+        keys = deduplicate(keys)
 
         # Set PyObMeta.keys
         PyObMeta.keys = keys

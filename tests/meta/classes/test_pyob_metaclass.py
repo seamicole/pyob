@@ -1,8 +1,15 @@
 # ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ GENERAL IMPORTS
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+import pytest
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob import PyOb
+from pyob.exceptions import InvalidTypeError
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -188,6 +195,142 @@ class TestPyObMetaclass:
         # Assert that all these lists are distinct
         # i.e. No two PyOb classes share a childs list
         assert len(set(child_lists)) == len(child_lists)
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT VALIDATES KEYS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_validates_keys(self):
+        """Tests to ensure that user-defined keys are validated"""
+
+        # Initialize raises block
+        with pytest.raises(InvalidTypeError):
+
+            # Define a dummy PyOb class
+            class PyObClassDummy1(PyOb):
+                """A dummy PyOb class"""
+
+                class PyObMeta:
+                    """PyObMeta Class"""
+
+                    key = 1
+
+        # Initialize raises block
+        with pytest.raises(InvalidTypeError):
+
+            # Define a dummy PyOb class
+            class PyObClassDummy2(PyOb):
+                """A dummy PyOb class"""
+
+                class PyObMeta:
+                    """PyObMeta Class"""
+
+                    key = [2, 3, 4]
+
+        # Initialize raises block
+        with pytest.raises(InvalidTypeError):
+
+            # Define a dummy PyOb class
+            class PyObClassDummy3(PyOb):
+                """A dummy PyOb class"""
+
+                class PyObMeta:
+                    """PyObMeta Class"""
+
+                    keys = 1
+
+        # Initialize raises block
+        with pytest.raises(InvalidTypeError):
+
+            # Define a dummy PyOb class
+            class PyObClassDummy4(PyOb):
+                """A dummy PyOb class"""
+
+                class PyObMeta:
+                    """PyObMeta Class"""
+
+                    keys = [2, 3, 4]
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT ASSIGNS KEYS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_assigns_keys(self):
+        """Tests to ensure that user-defined keys are validated"""
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                key = "key_1"
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_1",)
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                key = ("key_2",)
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_2",)
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                keys = "key_3"
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_3",)
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                keys = ("key_4", "key_5")
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_4", "key_5")
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                key = "key_6"
+                keys = ("key_7", "key_8")
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_6", "key_7", "key_8")
+
+        # Define a dummy PyOb class
+        class PyObClassDummy(PyOb):
+            """A dummy PyOb class"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                key = ("key_9", "key_10")
+                keys = ("key_11", "key_12")
+
+        # Assert that the key was correctly assigned
+        assert PyObClassDummy.PyObMeta.keys == ("key_9", "key_10", "key_11", "key_12")
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT LABELS DO NOT INHERIT

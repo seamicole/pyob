@@ -35,7 +35,7 @@ class TestPyObMetaclass:
                 """PyObMeta Class"""
 
         # Define a child PyOb class
-        class PyObClassChild1(PyOb):
+        class PyObClassChild1(PyObClassParent):
             """A dummy PyOb class"""
 
         # Assert that even inherited PyObMeta classes (no PyObMeta defined on child)
@@ -43,7 +43,7 @@ class TestPyObMetaclass:
         assert id(PyObClassChild1.PyObMeta) != id(PyObClassParent.PyObMeta)
 
         # Define a child PyOb class
-        class PyObClassChild2(PyOb):
+        class PyObClassChild2(PyObClassParent):
             """A dummy PyOb class"""
 
             class PyObMeta:
@@ -68,7 +68,7 @@ class TestPyObMetaclass:
                 """PyObMeta Class"""
 
         # Define a child PyOb class
-        class PyObClassChild1(PyOb):
+        class PyObClassChild1(PyObClassParent):
             """A dummy PyOb class"""
 
         # Assert that even inherited PyObMeta classes (no PyObMeta defined on child)
@@ -76,7 +76,7 @@ class TestPyObMetaclass:
         assert id(PyObClassChild1.PyObMeta.store) != id(PyObClassParent.PyObMeta.store)
 
         # Define a child PyOb class
-        class PyObClassChild2(PyOb):
+        class PyObClassChild2(PyObClassParent):
             """A dummy PyOb class"""
 
             class PyObMeta:

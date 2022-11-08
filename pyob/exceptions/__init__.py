@@ -8,9 +8,9 @@ class PyObError(Exception):
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ INVALID TYPE ERROR
+# │ UNEXPECTED TYPE ERROR
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class InvalidTypeError(PyObError):
-    """Invalid Type Error"""
+class UnexpectedTypeError(PyObError):
+    """Unexpected Type Error"""

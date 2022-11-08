@@ -9,7 +9,7 @@ import pytest
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob import PyOb
-from pyob.exceptions import InvalidTypeError
+from pyob.exceptions import UnexpectedTypeError
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -204,7 +204,7 @@ class TestPyObMetaclass:
         """Tests to ensure that user-defined keys are validated"""
 
         # Initialize raises block
-        with pytest.raises(InvalidTypeError):
+        with pytest.raises(UnexpectedTypeError):
 
             # Define a dummy PyOb class
             class PyObClassDummy1(PyOb):
@@ -216,7 +216,7 @@ class TestPyObMetaclass:
                     key = 1
 
         # Initialize raises block
-        with pytest.raises(InvalidTypeError):
+        with pytest.raises(UnexpectedTypeError):
 
             # Define a dummy PyOb class
             class PyObClassDummy2(PyOb):
@@ -228,7 +228,7 @@ class TestPyObMetaclass:
                     key = [2, 3, 4]
 
         # Initialize raises block
-        with pytest.raises(InvalidTypeError):
+        with pytest.raises(UnexpectedTypeError):
 
             # Define a dummy PyOb class
             class PyObClassDummy3(PyOb):
@@ -240,7 +240,7 @@ class TestPyObMetaclass:
                     keys = 1
 
         # Initialize raises block
-        with pytest.raises(InvalidTypeError):
+        with pytest.raises(UnexpectedTypeError):
 
             # Define a dummy PyOb class
             class PyObClassDummy4(PyOb):

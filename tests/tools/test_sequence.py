@@ -2,9 +2,16 @@
 # │ GENERAL IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from hypothesis import example, given
-from hypothesis.strategies import integers, lists, sampled_from, text
-from typing import Type
+from hypothesis import given
+from hypothesis.strategies import (
+    booleans,
+    composite,
+    integers,
+    lists,
+    sampled_from,
+    text,
+)
+from string import ascii_lowercase
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -15,43 +22,75 @@ from pyob.types import Sequence
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ TEST DEDUPLICATE
+# │ SEQUENCES
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-@given(
-    sequence=lists(
-        text(alphabet=["a", "b", "c", "d", "e"], max_size=1)
-        | integers(min_value=-5, max_value=5),
-        min_size=20,
-    ),
-    sequence_type=sampled_from([list, set, tuple]),
-)
-@example(sequence=[0, "", False, 0, "", False], sequence_type=tuple)
-def test_deduplicate(sequence: Sequence, sequence_type: Type[Sequence]) -> None:
-    """Tests the expected output of the pyob.tools.sequence.deduplicate function"""
+@composite
+def sequences(draw, sequence_types):
+    """
+    Generates a non-distinct elements list, i.e. a list with with at least one repeated
+    element
+    """
+
+    # Get sequence type
+    sequence_type = draw(sampled_from(sequence_types))
+
+    # Get sequence
+    sequence = draw(
+        lists(
+            integers(min_value=-2, max_value=2)
+            | text(alphabet=ascii_lowercase[:5], max_size=1)
+            | booleans(),
+            max_size=20,
+        ).filter(lambda x: len(x) > len(set(x)))
+    )
+
+    # Return sequence
+    return sequence_type(sequence)
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ TEST DEDUPLICATE PROPERTIES
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+@given(sequence=sequences(sequence_types=(list, set, tuple)))
+def test_deduplicate_properties(sequence: Sequence) -> None:
+    """
+    Tests the expected output properties of the pyob.tools.sequence.deduplicate function
+    """
 
     # Get deduplicated sequence
-    deduplicated = deduplicate(sequence_type(sequence), recurse=False)
+    deduplicated = deduplicate(sequence, recurse=False)
 
-    # Assert that the deduplicated sequence is of type sequence type
-    assert type(deduplicated) is sequence_type
-
-    # Get distinct count of elements
-    distinct_count = len(set(sequence))
+    # Assert that the deduplicated sequence is of type sequence
+    assert type(deduplicated) is type(sequence)
 
     # Assert that the length of the deduplicated sequence represents distinct elements
-    assert len(deduplicated) == distinct_count
+    assert len(deduplicated) == len(set(sequence))
 
-    # Return if sequence type is set
-    if sequence_type is set:
-        return
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ TEST DEDUPLICATE PRESERVES ELEMENT ORDER
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+
+@given(sequence=sequences(sequence_types=(list,)))
+def test_deduplicate_preserves_element_order(sequence: Sequence):
+    """
+    Tests that the output of pyob.tools.sequence.deduplicate function preserves the
+    original order of the input sequence
+    """
+
+    # Get deduplicated sequence
+    deduplicated = deduplicate(sequence, recurse=False)
 
     # Initialize a seen set
     seen = set()
 
     # Create a reverse list of deduplicated elements
-    rededuplicated = list(deduplicated)[::-1]
+    rededuplicated = deduplicated[::-1]
 
     # Iterate over sequence
     for element in sequence:
@@ -67,28 +106,32 @@ def test_deduplicate(sequence: Sequence, sequence_type: Type[Sequence]) -> None:
         # Add element to seen
         seen.add(element)
 
-    # Create a new nested sequence
-    sequence_nested = sequence_type(
-        [
-            "a",
-            "b",
-            sequence_type(sequence),
-            "a",
-            sequence_type(["a", "b", sequence_type(sequence), "a", "c"]),
-            "c",
-        ]
-    )
 
-    # Deduplicate the nested sequence
-    deduplicated_nested = deduplicate(sequence_nested, recurse=True)
+@given(sequence=sequences(sequence_types=(list,)))
+def test_deduplicate_recursion_applies_to_nested_sequences(sequence: Sequence):
+    """
+    Tests that the output of pyob.tools.sequence.deduplicate function preserves the
+    original order of the input sequence
+    """
 
-    # Assert that the recursive functionality works as expected
-    assert deduplicated_nested == sequence_type(
-        [
-            "a",
-            "b",
-            deduplicated,
-            sequence_type(["a", "b", deduplicated, "c"]),
-            "c",
-        ]
-    )
+    # Deduplicate the sequence
+    deduplicated = deduplicate(sequence, recurse=False)
+
+    # Create a new sequence with nested sequences
+    sequence = [
+        "a",
+        "b",
+        sequence,
+        "a",
+        ["a", "b", sequence, "a", "c"],
+        "c",
+    ]
+
+    # Assert the that deduplicate is applied to nested sequences
+    assert deduplicate(sequence, recurse=True) == [
+        "a",
+        "b",
+        deduplicated,
+        ["a", "b", deduplicated, "c"],
+        "c",
+    ]

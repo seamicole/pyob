@@ -11,7 +11,7 @@ from beartype.door import is_bearable
 import pyob.main.classes.pyob as pyob  # Protects against circular imports
 import pyob.store.classes.pyob_store as pyob_store  # Protects against circular imports
 
-from pyob.exceptions import InvalidTypeError
+from pyob.exceptions import UnexpectedTypeError
 from pyob.types import Sequence
 
 
@@ -69,7 +69,7 @@ def is_type(
         _is_type is False and raise_if is False
     )
 
-    # Check if should raise an InvalidTypeError
+    # Check if should raise an UnexpectedTypeError
     if should_raise:
 
         # Define annotation key
@@ -80,14 +80,14 @@ def is_type(
 
         # Construct message
         message = (
-            "Invalid type encountered!"
+            "Unexpected type encountered!"
             f"\n\n{annotation_key}: {annotation}"
             f"\nReceived: {type(item)}"
             f"\nVariable: {item}" + (("\n\n" + message) if message else "")
         )
 
-        # Raise InvalidTypeError
-        raise InvalidTypeError(message)
+        # Raise UnexpectedTypeError
+        raise UnexpectedTypeError(message)
 
     # Return boolean of whether item conforms to annotation
     return _is_type

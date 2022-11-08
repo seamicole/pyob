@@ -9,7 +9,7 @@ import pytest
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob import PyOb
-from pyob.exceptions import InvalidTypeError
+from pyob.exceptions import UnexpectedTypeError
 from pyob.tools.check import (
     is_pyob_instance,
     is_pyob_store_instance,
@@ -113,16 +113,16 @@ def test_is_type() -> None:
     assert is_type("five", int, raise_if=True) is False
 
     # Initialize raises block
-    with pytest.raises(InvalidTypeError):
+    with pytest.raises(UnexpectedTypeError):
 
-        # Raise an InvalidTypeError on non-matching type
+        # Raise an UnexpectedTypeError on non-matching type
         is_type("five", int, raise_if=False)
 
-    # Raise an InvalidTypeError on matching type
+    # Raise an UnexpectedTypeError on matching type
     assert is_type("five", str, raise_if=False) is True
 
     # Initialize raises block
-    with pytest.raises(InvalidTypeError):
+    with pytest.raises(UnexpectedTypeError):
 
-        # Raise an InvalidTypeError on matching type
+        # Raise an UnexpectedTypeError on matching type
         is_type("five", str, raise_if=True)

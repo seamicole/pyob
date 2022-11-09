@@ -47,7 +47,7 @@ def test_pascalize(words: list[str], delimiter: str) -> None:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-@given(words=lists(text(alphabet=ascii_lowercase, max_size=8)))
+@given(words=lists(text(alphabet=ascii_lowercase, max_size=8), max_size=5))
 @example(words=["Foo", "Bar"])  # "FooBar" --> ["Foo", "Bar"]
 def test_split_pascal(words: list[str]) -> None:
     """Tests the expected output of the pyob.tools.string.split_pascal function"""

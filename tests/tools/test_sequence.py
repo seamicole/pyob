@@ -22,14 +22,14 @@ from pyob.types import Sequence
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ SEQUENCES
+# │ DEDUPLICABLES
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
 @composite
-def sequences(draw, sequence_types):
+def deduplicables(draw, sequence_types):
     """
-    Generates a non-distinct elements list, i.e. a list with with at least one repeated
+    Generates a non-distinct sequence, i.e. a sequence with with at least one repeated
     element
     """
 
@@ -55,7 +55,7 @@ def sequences(draw, sequence_types):
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-@given(sequence=sequences(sequence_types=(list, set, tuple)))
+@given(sequence=deduplicables(sequence_types=(list, set, tuple)))
 def test_deduplicate_properties(sequence: Sequence) -> None:
     """
     Tests the expected output properties of the pyob.tools.sequence.deduplicate function
@@ -76,7 +76,7 @@ def test_deduplicate_properties(sequence: Sequence) -> None:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-@given(sequence=sequences(sequence_types=(list,)))
+@given(sequence=deduplicables(sequence_types=(list,)))
 def test_deduplicate_preserves_element_order(sequence: Sequence):
     """
     Tests that the output of pyob.tools.sequence.deduplicate function preserves the
@@ -107,7 +107,7 @@ def test_deduplicate_preserves_element_order(sequence: Sequence):
         seen.add(element)
 
 
-@given(sequence=sequences(sequence_types=(list,)))
+@given(sequence=deduplicables(sequence_types=(list,)))
 def test_deduplicate_recursion_applies_to_nested_sequences(sequence: Sequence):
     """
     Tests that the output of pyob.tools.sequence.deduplicate function preserves the

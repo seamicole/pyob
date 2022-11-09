@@ -19,7 +19,7 @@ from pyob.tools.string import pascalize, split_pascal
 
 
 @given(
-    words=lists(text(alphabet=ascii_letters, max_size=8)),
+    words=lists(text(alphabet=ascii_letters, max_size=8), max_size=5),
     delimiter=sampled_from(punctuation),
 )
 @example(words=["foo", "bar"], delimiter=" ")  # "foo bar" --> "FooBar"

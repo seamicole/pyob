@@ -91,7 +91,10 @@ def test_is_sequence() -> None:
     # Assert that a tuple of items is a sequence
     assert is_sequence(tuple(items)) is True
 
-    # Assert that a dictionary if items is not a sequence
+    # Assert that a string is not a sequence
+    assert is_sequence("sequence") is False
+
+    # Assert that a dictionary of items is not a sequence
     assert is_sequence({"one": 1, 1: True, "True": "one"}) is False
 
 

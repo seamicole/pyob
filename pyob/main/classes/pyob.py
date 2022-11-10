@@ -12,10 +12,3 @@ from pyob.meta.classes.pyob_class import PyObClass
 
 class PyOb(metaclass=PyObClass):
     """An abstract root class for all user-defined PyOb classes"""
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ PYOB META
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    class PyObMeta:
-        """PyObMeta Class"""

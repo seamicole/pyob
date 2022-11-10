@@ -13,7 +13,7 @@ from pyob.meta.tools.cloners import clone_pyob_meta
 from pyob.meta.tools.yielders import yield_parents
 
 if TYPE_CHECKING:
-    from pyob.types import AnyClass, Args, Kwargs
+    from pyob.types import Args, Kwargs
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -23,13 +23,6 @@ if TYPE_CHECKING:
 
 class PyObClass(type):
     """The root metaclass for PyOb and all of its subclasses"""
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ CLASS ATTRIBUTES
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    # Type-hint PyObMeta class
-    PyObMeta: AnyClass
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
@@ -70,3 +63,20 @@ class PyObClass(type):
 
             # Append current class to Children of parent PyObMeta
             Parent.PyObMeta.Children.append(cls)
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ PYOB META
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    class PyObMeta:
+        """PyObMeta Class"""
+
+        # ┌─────────────────────────────────────────────────────────────────────────────
+        # │ RELATIVES
+        # └─────────────────────────────────────────────────────────────────────────────
+
+        # Initialize list of parent classes to None
+        Parents: list[PyObClass] | None = None
+
+        # Initialize list of child classes to None
+        Children: list[PyObClass] | None = None

@@ -17,7 +17,7 @@ class TestPyObMetaClass:
     # │ TEST INIT CREATES EMPTY LIST OF PARENTS AND CHILDREN
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_init_creates_empty_list_of_parents_and_children(self):
+    def test_init_creates_empty_list_of_parents_and_children(self) -> None:
         """Tests that Parents and Children are initialized to an empty list"""
 
         # Create a PyObMetaClass instance

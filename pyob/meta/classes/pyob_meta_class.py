@@ -3,14 +3,14 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import Sequence, TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 if TYPE_CHECKING:
-    from pyob.types import Args, Kwargs, PyObChildren, PyObParents
+    from pyob.types import Args, Kwargs, PyObClass
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -26,16 +26,32 @@ class PyObMetaClass:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of Parents
-    Parents: PyObParents
+    Parents: list[PyObClass]
 
     # Declare type of Children
-    Children: PyObChildren
+    Children: list[PyObClass]
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE DECLARATION: LOOKUP FIELDS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of unique fields
+    unique: frozenset[str]
+
+    # Declare type of indexed fields
+    indexes: frozenset[str]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, *args: Args, **kwargs: Kwargs):
+    def __init__(
+        self,
+        *args: Args,
+        unique: Sequence[str] | None = None,
+        indexes: Sequence[str] | None = None,
+        **kwargs: Kwargs,
+    ):
         """Init Method"""
 
         # Initialize list of parent classes

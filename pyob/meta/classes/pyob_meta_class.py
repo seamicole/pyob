@@ -10,23 +10,38 @@ from typing import TYPE_CHECKING
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 if TYPE_CHECKING:
-    from pyob.types import PyObClass
+    from pyob.types import Args, Kwargs, PyObChildren, PyObParents
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ PYOB META BASE
+# │ PYOB META CLASS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class PyObMetaBase:
-    """An abstract blueprint for all PyObClass.PyObMeta definitions"""
+class PyObMetaClass:
+    """The root (pseudo-)metaclass for user-defined PyObMeta classes"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ RELATIVES
+    # │ TYPE DECLARATION: PARENTS AND CHILDREN
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Initialize list of parent classes to None
-    Parents: list[PyObClass] | None = None
+    # Declare type of Parents
+    Parents: PyObParents
 
-    # Initialize list of child classes to None
-    Children: list[PyObClass] | None = None
+    # Declare type of Children
+    Children: PyObChildren
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ __INI__
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def __init__(self, *args: Args, **kwargs: Kwargs):
+        """Init Method"""
+
+        # Initialize list of parent classes
+        # i.e. The subset of bases that are also PyObClasses
+        self.Parents = []
+
+        # Initialize list of child classes
+        # i.e. Any PyObClasses that end up inheriting from the current class
+        self.Children = []

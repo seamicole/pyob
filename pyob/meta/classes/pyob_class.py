@@ -9,8 +9,7 @@ from typing import TYPE_CHECKING
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.meta.tools.cloners import clone_pyob_meta
-from pyob.meta.tools.yielders import yield_parents
+from pyob.meta.classes.pyob_meta_class import PyObMetaClass
 
 if TYPE_CHECKING:
     from pyob.types import Args, Kwargs
@@ -35,48 +34,32 @@ class PyObClass(type):
         # │ PYOB META
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Clone the initial PyObMeta object
-        # So that it occupies a different address in memory and therefore does not
-        # propogate changes to the PyObMeta class of parent PyOb classes if inherited!
-        cls.PyObMeta = clone_pyob_meta(PyObMeta=cls.PyObMeta)
+        # Retrieve user-defined PyObMeta class
+        PyObMeta = getattr(cls, "PyObMeta", {})
 
-        # Retrieve the newly cloned PyObMeta class
-        PyObMeta = cls.PyObMeta
+        # Get dictionary of user-defined PyObMeta attributes
+        pyob_meta_dict = PyObMeta and PyObMeta.__dict__
+
+        # Initialize user-defined PyObMeta into a PyObMetaClass instance
+        # Ignore type checks to allow reassigning of PyObMeta to PyObMetaClass instance
+        PyObMeta = cls.PyObMeta = PyObMetaClass(**pyob_meta_dict)
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ PARENTS AND CHILDREN
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Initialize list of parent classes
-        # i.e. The subset of bases that are also PyObClasses
-        PyObMeta.Parents = []
+        # Iterate over child's base classes
+        for Base in cls.__bases__:
 
-        # Initialize list of child classes
-        # i.e. Any PyObClasses that end up inheriting from the current class
-        PyObMeta.Children = []
-
-        # Iterate over parents
-        for Parent in yield_parents(Child=cls):
+            # Continue if base class is not a PyObClass
+            # i.e. Does not share the child's metaclass, i.e. PyObClass
+            if type(Base) is not PyObClass:
+                continue
 
             # Append to Parents of current PyObMeta
-            PyObMeta.Parents.append(Parent)
+            PyObMeta.Parents.append(Base)
 
             # Append current class to Children of parent PyObMeta
-            Parent.PyObMeta.Children.append(cls)
+            Base.PyObMeta.Children.append(cls)
 
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ PYOB META
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    class PyObMeta:
-        """PyObMeta Class"""
-
-        # ┌─────────────────────────────────────────────────────────────────────────────
-        # │ RELATIVES
-        # └─────────────────────────────────────────────────────────────────────────────
-
-        # Initialize list of parent classes to None
-        Parents: list[PyObClass] | None = None
-
-        # Initialize list of child classes to None
-        Children: list[PyObClass] | None = None
+        # NOTE: The above logic establishes a PyOb family tree of inheritance

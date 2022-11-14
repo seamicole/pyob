@@ -3,6 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from __future__ import annotations
+
 from typing import Sequence, TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -50,8 +51,8 @@ class PyObMetaClass:
     def __init__(
         self,
         *args: Args,
-        uniques: Sequence[str] | None = None,
-        indexes: Sequence[str] | None = None,
+        uniques: Sequence[str | Sequence[str]] | None = None,
+        indexes: Sequence[str | Sequence[str]] | None = None,
         **kwargs: Kwargs,
     ):
         """Init Method"""

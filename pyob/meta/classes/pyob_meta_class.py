@@ -38,11 +38,11 @@ class PyObMetaClass:
     # │ TYPE DECLARATION: CONSTRAINTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Declare type of indexed fields
-    indexes: frozenset[str | frozenset[str]]
-
     # Declare type of unique fields
     uniques: frozenset[str | frozenset[str]]
+
+    # Declare type of indexed fields
+    indexes: frozenset[str | frozenset[str]]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
@@ -73,8 +73,8 @@ class PyObMetaClass:
         # │ CONSTRAINTS
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Initialize frozenset of index fields
-        self.indexes = freezeset(indexes or [])
-
         # Initialize frozenset of unique fields
         self.uniques = freezeset(uniques or [])
+
+        # Initialize frozenset of index fields
+        self.indexes = freezeset(indexes or [])

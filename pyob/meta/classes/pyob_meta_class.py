@@ -9,6 +9,8 @@ from typing import Sequence, TYPE_CHECKING
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+from pyob.tools.sequence import freezeset
+
 if TYPE_CHECKING:
     from pyob.types import Args, Kwargs, PyObClass
 
@@ -32,14 +34,14 @@ class PyObMetaClass:
     Children: list[PyObClass]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: LOOKUP FIELDS
+    # │ TYPE DECLARATION: CONSTRAINTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Declare type of unique fields
-    unique: frozenset[str]
-
     # Declare type of indexed fields
-    indexes: frozenset[str]
+    indexes: frozenset[str | frozenset[str]]
+
+    # Declare type of unique fields
+    uniques: frozenset[str | frozenset[str]]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
@@ -48,11 +50,15 @@ class PyObMetaClass:
     def __init__(
         self,
         *args: Args,
-        unique: Sequence[str] | None = None,
+        uniques: Sequence[str] | None = None,
         indexes: Sequence[str] | None = None,
         **kwargs: Kwargs,
     ):
         """Init Method"""
+
+        # ┌─────────────────────────────────────────────────────────────────────────────
+        # │ PARENTS AND CHILDREN
+        # └─────────────────────────────────────────────────────────────────────────────
 
         # Initialize list of parent classes
         # i.e. The subset of bases that are also PyObClasses
@@ -61,3 +67,13 @@ class PyObMetaClass:
         # Initialize list of child classes
         # i.e. Any PyObClasses that end up inheriting from the current class
         self.Children = []
+
+        # ┌─────────────────────────────────────────────────────────────────────────────
+        # │ CONSTRAINTS
+        # └─────────────────────────────────────────────────────────────────────────────
+
+        # Initialize frozenset of index fields
+        self.indexes = freezeset(indexes or [])
+
+        # Initialize frozenset of unique fields
+        self.uniques = freezeset(uniques or [])

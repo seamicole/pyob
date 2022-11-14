@@ -2,7 +2,8 @@
 # │ GENERAL IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from typing import Any, Iterable, Mapping, TypeVar
+from __future__ import annotations
+from typing import Any, Hashable, Iterable, Mapping, Sequence, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -16,6 +17,12 @@ from pyob.meta.classes.pyob_class import PyObClass as PyObClass  # noqa
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 Args = Iterable[Any]
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ HASHABLE SEQUENCE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+HashableSequence = Sequence[Hashable | "HashableSequence"]
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ KWARGS

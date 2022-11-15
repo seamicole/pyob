@@ -57,10 +57,10 @@ class PyObClass(type):
             if type(Base) is not PyObClass:
                 continue
 
-            # Append to Parents of current PyObMeta
-            PyObMeta.Parents.append(Base)
+            # Extend to Parents of current PyObMeta
+            PyObMeta.Parents = PyObMeta.Parents + (Base,)
 
-            # Append current class to Children of parent PyObMeta
-            Base.PyObMeta.Children.append(cls)
+            # Extend current class to Children of parent PyObMeta
+            Base.PyObMeta.Children = Base.PyObMeta.Children + (cls,)
 
         # NOTE: The above logic establishes a PyOb family tree of inheritance

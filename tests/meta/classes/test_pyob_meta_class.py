@@ -24,10 +24,10 @@ class TestPyObMetaClass:
         PyObMeta = PyObMetaClass()
 
         # Assert that PyObMeta Parents is an empty list
-        assert type(PyObMeta.Parents) is list and len(PyObMeta.Parents) == 0
+        assert type(PyObMeta.Parents) is tuple and len(PyObMeta.Parents) == 0
 
         # Assert that PyObMeta Children is an empty list
-        assert type(PyObMeta.Children) is list and len(PyObMeta.Children) == 0
+        assert type(PyObMeta.Children) is tuple and len(PyObMeta.Children) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT FREEZES CONSTRAINTS
@@ -55,10 +55,10 @@ class TestPyObMetaClass:
         assert type(ConstrainedPyObMeta.uniques) is frozenset
 
         # Assert that unique fields are correct
-        assert ConstrainedPyObMeta.uniques == {"a", "b", {"c", "d"}}
+        assert ConstrainedPyObMeta.uniques == {"a", "b", frozenset(("c", "d"))}
 
         # Assert that indexes is now a frozenset
         assert type(ConstrainedPyObMeta.indexes) is frozenset
 
         # Assert that indexed fields are correct
-        assert ConstrainedPyObMeta.indexes == {"e", "f", {"g", "h"}}
+        assert ConstrainedPyObMeta.indexes == {"e", "f", frozenset(("g", "h"))}

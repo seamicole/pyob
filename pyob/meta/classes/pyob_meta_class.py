@@ -29,10 +29,10 @@ class PyObMetaClass:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of Parents
-    Parents: list[PyObClass]
+    Parents: tuple[PyObClass, ...]
 
     # Declare type of Children
-    Children: list[PyObClass]
+    Children: tuple[PyObClass, ...]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: CONSTRAINTS
@@ -63,11 +63,11 @@ class PyObMetaClass:
 
         # Initialize list of parent classes
         # i.e. The subset of bases that are also PyObClasses
-        self.Parents = []
+        self.Parents = ()
 
         # Initialize list of child classes
         # i.e. Any PyObClasses that end up inheriting from the current class
-        self.Children = []
+        self.Children = ()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ CONSTRAINTS

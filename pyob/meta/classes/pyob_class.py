@@ -46,7 +46,7 @@ class PyObClass(type):
         PyObMeta = cls.PyObMeta = PyObMetaClass(**pyob_meta_dict)
 
         # ┌─────────────────────────────────────────────────────────────────────────────
-        # │ PARENTS AND CHILDREN
+        # │ BASE CLASSES
         # └─────────────────────────────────────────────────────────────────────────────
 
         # Iterate over child's base classes
@@ -57,10 +57,25 @@ class PyObClass(type):
             if type(Base) is not PyObClass:
                 continue
 
+            # ┌─────────────────────────────────────────────────────────────────────────
+            # │ PARENTS AND CHILDREN
+            # └─────────────────────────────────────────────────────────────────────────
+
             # Extend to Parents of current PyObMeta
             PyObMeta.Parents = PyObMeta.Parents + (Base,)
 
             # Extend current class to Children of parent PyObMeta
             Base.PyObMeta.Children = Base.PyObMeta.Children + (cls,)
 
-        # NOTE: The above logic establishes a PyOb family tree of inheritance
+            # ┌─────────────────────────────────────────────────────────────────────────
+            # │ FIELD SET INHERITANCE
+            # └─────────────────────────────────────────────────────────────────────────
+
+            # Inherit keys from parent
+            PyObMeta.keys = Base.PyObMeta.keys | PyObMeta.keys
+
+            # Inherit uniques from parent
+            PyObMeta.uniques = Base.PyObMeta.uniques | PyObMeta.uniques
+
+            # Inherit indexes from parent
+            PyObMeta.indexes = Base.PyObMeta.indexes | PyObMeta.indexes

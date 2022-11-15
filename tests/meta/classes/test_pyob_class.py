@@ -163,3 +163,108 @@ class TestPyObClass:
 
         # Assert that ChildTwo has no children
         assert len(ChildTwo.PyObMeta.Children) == 0
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT INHERITS FIELD SETS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_inherits_field_sets(self) -> None:
+        """Tests that field sets are passed on from parent to child classes"""
+
+        # Define a parent PyOb class
+        class ParentOne(PyOb):
+            """A dummy parent PyOb class"""
+
+            class PyObMeta:
+
+                keys = ("a1", "b1", "c1")
+                uniques = ("d1", "e1", "f1")
+                indexes = ("g1", "h1", "i1")
+
+        # Define a child PyOb class
+        class ChildOne(ParentOne):
+            """A dummy child PyOb class"""
+
+        # Assert that ChildOne inherits ParentOne's field sets
+        assert ChildOne.PyObMeta.keys == ParentOne.PyObMeta.keys
+        assert ChildOne.PyObMeta.uniques == ParentOne.PyObMeta.uniques
+        assert ChildOne.PyObMeta.indexes == ParentOne.PyObMeta.indexes
+
+        # Define another child PyOb class
+        class ChildTwo(ParentOne):
+            """A dummy child PyOb class"""
+
+            class PyObMeta:
+
+                keys = ("aa2", "bb2", "cc2")
+                uniques = ("dd2", "ee2", "ff2")
+                indexes = ("gg2", "hh2", "ii2")
+
+        # Assert that ChildOne inherits ParentOne's field sets
+        assert ChildTwo.PyObMeta.keys == ParentOne.PyObMeta.keys | {"aa2", "bb2", "cc2"}
+        assert ChildTwo.PyObMeta.uniques == ParentOne.PyObMeta.uniques | {
+            # Keys
+            "aa2",
+            "bb2",
+            "cc2",
+            # Uniques
+            "dd2",
+            "ee2",
+            "ff2",
+        }
+        assert ChildTwo.PyObMeta.indexes == ParentOne.PyObMeta.indexes | {
+            "gg2",
+            "hh2",
+            "ii2",
+        }
+
+        # Define another parent PyOb class
+        class ParentTwo(PyOb):
+            """A dummy parent PyOb class"""
+
+            class PyObMeta:
+
+                keys = ("a2", "b2", "c2")
+                uniques = ("d2", "e2", "f2")
+                indexes = ("g2", "h2", "i2")
+
+        # Define another child PyOb class
+        class ChildThree(ParentOne, ParentTwo):
+            """A dummy child PyOb class"""
+
+            class PyObMeta:
+
+                keys = ("aa3", "bb3", "cc3")
+                uniques = ("dd3", "ee3", "ff3")
+                indexes = ("gg3", "hh3", "ii3")
+
+        # Assert that ChildOne inherits ParentOne and ParentTwo's field sets
+        assert (
+            ChildThree.PyObMeta.keys
+            == ParentOne.PyObMeta.keys | ParentTwo.PyObMeta.keys | {"aa3", "bb3", "cc3"}
+        )
+        assert (
+            ChildThree.PyObMeta.uniques
+            == ParentOne.PyObMeta.uniques
+            | ParentTwo.PyObMeta.uniques
+            | {
+                # Keys
+                "aa3",
+                "bb3",
+                "cc3",
+                # Uniques
+                "dd3",
+                "ee3",
+                "ff3",
+            }
+        )
+        assert (
+            ChildThree.PyObMeta.indexes
+            == ParentOne.PyObMeta.indexes
+            | ParentTwo.PyObMeta.indexes
+            | {
+                "gg3",
+                "hh3",
+                "ii3",
+            }
+        )

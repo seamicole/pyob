@@ -177,9 +177,9 @@ class TestPyObClass:
 
             class PyObMeta:
 
-                keys = ("a1", "b1", "c1")
-                uniques = ("d1", "e1", "f1")
-                indexes = ("g1", "h1", "i1")
+                keys = {"a1", "b1", "c1"}
+                uniques = {"d1", "e1", "f1"}
+                indexes = {"g1", "h1", "i1"}
 
         # Define a child PyOb class
         class ChildOne(ParentOne):
@@ -224,9 +224,9 @@ class TestPyObClass:
 
             class PyObMeta:
 
-                keys = ("a2", "b2", "c2")
-                uniques = ("d2", "e2", "f2")
-                indexes = ("g2", "h2", "i2")
+                keys = {"a2", "b2", "c2"}
+                uniques = {"d2", "e2", "f2"}
+                indexes = {"g2", "h2", "i2"}
 
         # Define another child PyOb class
         class ChildThree(ParentOne, ParentTwo):

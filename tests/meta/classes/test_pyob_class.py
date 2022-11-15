@@ -177,6 +177,7 @@ class TestPyObClass:
 
             class PyObMeta:
 
+                # Using sets here because mypy complains otherwise
                 keys = {"a1", "b1", "c1"}
                 uniques = {"d1", "e1", "f1"}
                 indexes = {"g1", "h1", "i1"}
@@ -224,6 +225,7 @@ class TestPyObClass:
 
             class PyObMeta:
 
+                # Using sets here because mypy complains otherwise
                 keys = {"a2", "b2", "c2"}
                 uniques = {"d2", "e2", "f2"}
                 indexes = {"g2", "h2", "i2"}

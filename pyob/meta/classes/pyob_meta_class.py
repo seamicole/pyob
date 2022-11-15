@@ -10,6 +10,7 @@ from typing import Sequence, TYPE_CHECKING
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+from pyob.store.classes.pyob_store import PyObStore
 from pyob.tools.sequence import freezeset
 
 if TYPE_CHECKING:
@@ -35,7 +36,14 @@ class PyObMetaClass:
     Children: tuple[PyObClass, ...]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: CONSTRAINTS
+    # │ TYPE DECLARATION: STORE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of store
+    store: PyObStore
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE DECLARATION: FIELD SETS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of key fields
@@ -72,6 +80,13 @@ class PyObMetaClass:
         # Initialize tuple of child classes
         # i.e. Any PyObClasses that end up inheriting from the current class
         self.Children = ()
+
+        # ┌─────────────────────────────────────────────────────────────────────────────
+        # │ STORE
+        # └─────────────────────────────────────────────────────────────────────────────
+
+        # Initialize PyObStore instance
+        self.store = PyObStore()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ FIELD SETS

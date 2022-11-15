@@ -61,11 +61,11 @@ class PyObMetaClass:
         # │ PARENTS AND CHILDREN
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Initialize list of parent classes
+        # Initialize tuple of parent classes
         # i.e. The subset of bases that are also PyObClasses
         self.Parents = ()
 
-        # Initialize list of child classes
+        # Initialize tuple of child classes
         # i.e. Any PyObClasses that end up inheriting from the current class
         self.Children = ()
 

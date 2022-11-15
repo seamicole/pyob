@@ -30,14 +30,17 @@ class TestPyObMetaClass:
         assert type(PyObMeta.Children) is tuple and len(PyObMeta.Children) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST INIT FREEZES CONSTRAINTS
+    # │ TEST INIT FREEZES FIELD SETS
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_init_freezes_constraints(self) -> None:
-        """Tests that constraints passed into the PyObMetaClass instance are frozen"""
+    def test_init_freezes_field_sets(self) -> None:
+        """Tests that field sets passed into the PyObMetaClass instance are frozen"""
 
         # Create a PyObMetaClass instance without constraints
         UnconstrainedPyObMeta = PyObMetaClass()
+
+        # Assert that PyObMeta keys is an empty frozenset
+        assert UnconstrainedPyObMeta.keys == frozenset([])
 
         # Assert that PyObMeta uniques is an empty frozenset
         assert UnconstrainedPyObMeta.uniques == frozenset([])
@@ -47,18 +50,42 @@ class TestPyObMetaClass:
 
         # Create another PyObMetaClass instance with constraints
         ConstrainedPyObMeta = PyObMetaClass(
-            uniques=("a", "b", ("c", "d", "c"), "a"),
-            indexes=("e", "f", ("g", "h", "g"), "e"),
+            keys=("a", "b", ("c", "d", "c"), "a"),
+            uniques=("e", "f", ("g", "h", "g"), "e"),
+            indexes=("i", "j", ("k", "l", "k"), "i"),
         )
+
+        # Assert that keys is now a frozenset
+        assert type(ConstrainedPyObMeta.keys) is frozenset
+
+        # Assert that key fields are correct
+        assert ConstrainedPyObMeta.keys == {"a", "b", frozenset(("c", "d"))}
 
         # Assert that uniques is now a frozenset
         assert type(ConstrainedPyObMeta.uniques) is frozenset
 
         # Assert that unique fields are correct
-        assert ConstrainedPyObMeta.uniques == {"a", "b", frozenset(("c", "d"))}
+        assert ConstrainedPyObMeta.uniques == ConstrainedPyObMeta.keys | {
+            "e",
+            "f",
+            frozenset(("g", "h")),
+        }
 
         # Assert that indexes is now a frozenset
         assert type(ConstrainedPyObMeta.indexes) is frozenset
 
         # Assert that indexed fields are correct
-        assert ConstrainedPyObMeta.indexes == {"e", "f", frozenset(("g", "h"))}
+        assert ConstrainedPyObMeta.indexes == {"i", "j", frozenset(("k", "l"))}
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT INCLUDES KEYS IN UNIQUES
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_includes_keys_in_uniques(self) -> None:
+        """Tests that keys are always unique by definition"""
+
+        # Create a PyObMetaClass instance
+        PyObMeta = PyObMetaClass(keys=("a", "b", "c"), uniques=("c", "d", "e"))
+
+        # Assert that uniques include keys automatically
+        assert PyObMeta.uniques == frozenset(("a", "b", "c", "d", "e"))

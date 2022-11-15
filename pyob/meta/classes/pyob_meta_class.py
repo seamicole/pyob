@@ -38,6 +38,9 @@ class PyObMetaClass:
     # │ TYPE DECLARATION: CONSTRAINTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
+    # Declare type of key fields
+    keys: frozenset[str | frozenset[str]]
+
     # Declare type of unique fields
     uniques: frozenset[str | frozenset[str]]
 
@@ -51,6 +54,7 @@ class PyObMetaClass:
     def __init__(
         self,
         *args: Args,
+        keys: Sequence[str | Sequence[str]] | None = None,
         uniques: Sequence[str | Sequence[str]] | None = None,
         indexes: Sequence[str | Sequence[str]] | None = None,
         **kwargs: Kwargs,
@@ -70,11 +74,20 @@ class PyObMetaClass:
         self.Children = ()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
-        # │ CONSTRAINTS
+        # │ FIELD SETS
         # └─────────────────────────────────────────────────────────────────────────────
 
+        # Initialize frozenset of key fields
+        # i.e. A unique value across all fields
+        # Value points to one instance
+        self.keys = freezeset(keys or [])
+
         # Initialize frozenset of unique fields
-        self.uniques = freezeset(uniques or [])
+        # i.e. A unique value for a given field
+        # Value points to one instance given a field
+        self.uniques = self.keys | freezeset(uniques or [])  # Keys unique by definition
 
         # Initialize frozenset of index fields
+        # i.e. A non-unique value for a given field
+        # Value points to many instances given a field
         self.indexes = freezeset(indexes or [])

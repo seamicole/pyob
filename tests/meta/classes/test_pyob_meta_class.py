@@ -14,19 +14,19 @@ class TestPyObMetaClass:
     """A test class for pyob.meta.classes.pyob_meta_class.PyObMetaClass"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST INIT CREATES EMPTY LIST OF PARENTS AND CHILDREN
+    # │ TEST INIT CREATES EMPTY TUPLE OF PARENTS AND CHILDREN
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_init_creates_empty_list_of_parents_and_children(self) -> None:
-        """Tests that Parents and Children are initialized to an empty list"""
+    def test_init_creates_empty_tuple_of_parents_and_children(self) -> None:
+        """Tests that Parents and Children are initialized to an empty tuple"""
 
         # Create a PyObMetaClass instance
         PyObMeta = PyObMetaClass()
 
-        # Assert that PyObMeta Parents is an empty list
+        # Assert that PyObMeta Parents is an empty tuple
         assert type(PyObMeta.Parents) is tuple and len(PyObMeta.Parents) == 0
 
-        # Assert that PyObMeta Children is an empty list
+        # Assert that PyObMeta Children is an empty tuple
         assert type(PyObMeta.Children) is tuple and len(PyObMeta.Children) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────

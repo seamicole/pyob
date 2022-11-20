@@ -3,6 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
+from pyob.store.classes.pyob_store import PyObStore
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -28,6 +29,21 @@ class TestPyObMetaClass:
 
         # Assert that PyObMeta Children is an empty tuple
         assert type(PyObMeta.Children) is tuple and len(PyObMeta.Children) == 0
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT CREATES EMPTY STORE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_creates_empty_store(self) -> None:
+        """Tests that an empty store is always initialized"""
+
+        # Create a PyObMetaClass instance
+        PyObMeta = PyObMetaClass()
+
+        # Assert PyObMeta.store is an instance of PyObStore
+        assert isinstance(PyObMeta.store, PyObStore)
+
+        # TODO: Assert that the store is empty
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT FREEZES FIELD SETS

@@ -79,3 +79,36 @@ class PyObClass(type):
 
             # Inherit indexes from parent
             PyObMeta.indexes = Base.PyObMeta.indexes | PyObMeta.indexes
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ STORE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    @property
+    def store(cls):
+        """Returns PyObClass.PyObMeta.store"""
+
+        # Return PyObClass.PyObMeta.store
+        return cls.PyObMeta.store
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ OBS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    @property
+    def obs(cls):
+        """An alias for the PyObClass.store property"""
+
+        # Return PyObClass.store
+        return cls.PyObMeta.store
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ OBJECTS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    @property
+    def objects(cls):
+        """An alias for trhe PyObClass.store property"""
+
+        # Return PyObClass.store
+        return cls.PyObMeta.store

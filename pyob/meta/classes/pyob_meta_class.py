@@ -39,7 +39,10 @@ class PyObMetaClass:
     # │ TYPE DECLARATION: STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Declare type of store
+    # Declare type of store class
+    Store: type[PyObStore]
+
+    # Declare type of store instance
     store: PyObStore
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -62,6 +65,7 @@ class PyObMetaClass:
     def __init__(
         self,
         *args: Args,
+        Store: type[PyObStore] | None = None,
         keys: Sequence[str | Sequence[str]] | None = None,
         uniques: Sequence[str | Sequence[str]] | None = None,
         indexes: Sequence[str | Sequence[str]] | None = None,
@@ -85,8 +89,11 @@ class PyObMetaClass:
         # │ STORE
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Initialize PyObStore instance
-        self.store = PyObStore()
+        # Get store class
+        Store = Store or PyObStore
+
+        # Initialize PyObStore instance from store class
+        self.store = Store()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ FIELD SETS

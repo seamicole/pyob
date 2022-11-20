@@ -4,6 +4,7 @@
 
 from pyob.main.classes.pyob import PyOb
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
+from pyob.store.classes.pyob_store import PyObStore
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -56,9 +57,9 @@ class TestPyObClass:
         # Assert that PyOb has no parent classes
         assert len(PyOb.PyObMeta.Parents) == 0
 
-        # Define a parent PyOb class
+        # Define a parent PyObClass
         class ParentOne(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
         # Assert that the parent of ParentOne is PyOb
         assert (
@@ -66,9 +67,9 @@ class TestPyObClass:
             and ParentOne.PyObMeta.Parents[0] is PyOb
         )
 
-        # Define a child PyOb class
+        # Define a child PyObClass
         class ChildOne(ParentOne):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
         # Assert that the parent of ChildOne is ParentOne
         assert (
@@ -76,13 +77,13 @@ class TestPyObClass:
             and ChildOne.PyObMeta.Parents[0] is ParentOne
         )
 
-        # Define another parent PyOb class
+        # Define another parent PyObClass
         class ParentTwo(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
-        # Define another child PyOb class that inherits from both parents
+        # Define another child PyObClass that inherits from both parents
         class ChildTwo(ParentOne, ParentTwo):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
         # Assert that the parents of ChildTwo is ParentOne and ParentTwo
         assert (
@@ -104,9 +105,9 @@ class TestPyObClass:
         # Get initial number of PyOb children
         pyob_child_count_initial = len(PyOb.PyObMeta.Children)
 
-        # Define a parent PyOb class
+        # Define a parent PyObClass
         class ParentOne(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
         # Assert that PyOb now has one more child
         assert (
@@ -117,9 +118,9 @@ class TestPyObClass:
         # Assert that ParentOne has no children
         assert len(ParentOne.PyObMeta.Children) == 0
 
-        # Define a child PyOb class
+        # Define a child PyObClass
         class ChildOne(ParentOne):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
         # Assert that ParentOne now has one child
         assert (
@@ -130,9 +131,9 @@ class TestPyObClass:
         # Assert that ChildOne has no children
         assert len(ChildOne.PyObMeta.Children) == 0
 
-        # Define another parent PyOb class
+        # Define another parent PyObClass
         class ParentTwo(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
         # Assert that PyOb now has one more child
         assert (
@@ -144,9 +145,9 @@ class TestPyObClass:
         # Assert that ParentTwo has no children
         assert len(ParentTwo.PyObMeta.Children) == 0
 
-        # Define another child PyOb class that inherits from ParentOne and ParentTwo
+        # Define another child PyObClass that inherits from ParentOne and ParentTwo
         class ChildTwo(ParentOne, ParentTwo):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
         # Assert that ParentOne now has two children
         assert (
@@ -165,15 +166,45 @@ class TestPyObClass:
         assert len(ChildTwo.PyObMeta.Children) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST INIT RESPECTS CUSTOM PYOB STORE CLASSES
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_init_respects_custom_pyob_store_classes(self) -> None:
+        """Tests that a user can define a custom PyObStore class in PyObMeta"""
+
+        # Define a PyObClass with a default PyObStore
+        class DefaultPyObClass(PyOb):
+            """A dummy PyObClass"""
+
+        # Assert that the DefaultPyObClass.PyObMeta is initialized with a PyObStore
+        assert type(DefaultPyObClass.PyObMeta.store) is PyObStore
+
+        # Define a custom PyObStore class
+        class CustomStore(PyObStore):
+            """A dummy PyObStore"""
+
+        # Define a PyObClass with a custom PyObStore
+        class CustomPyObClass(PyOb):
+            """A dummy PyObClass"""
+
+            class PyObMeta:
+                """PyObMeta Class"""
+
+                Store = CustomStore
+
+        # Assert that the CustomPyObClass.PyObMeta is initialized with a CustomStore
+        assert type(CustomPyObClass.PyObMeta.store) is CustomStore
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT INHERITS FIELD SETS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     def test_init_inherits_field_sets(self) -> None:
         """Tests that field sets are passed on from parent to child classes"""
 
-        # Define a parent PyOb class
+        # Define a parent PyObClass
         class ParentOne(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
             class PyObMeta:
 
@@ -182,18 +213,18 @@ class TestPyObClass:
                 uniques = {"d1", "e1", "f1"}
                 indexes = {"g1", "h1", "i1"}
 
-        # Define a child PyOb class
+        # Define a child PyObClass
         class ChildOne(ParentOne):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
         # Assert that ChildOne inherits ParentOne's field sets
         assert ChildOne.PyObMeta.keys == ParentOne.PyObMeta.keys
         assert ChildOne.PyObMeta.uniques == ParentOne.PyObMeta.uniques
         assert ChildOne.PyObMeta.indexes == ParentOne.PyObMeta.indexes
 
-        # Define another child PyOb class
+        # Define another child PyObClass
         class ChildTwo(ParentOne):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
             class PyObMeta:
 
@@ -219,9 +250,9 @@ class TestPyObClass:
             "ii2",
         }
 
-        # Define another parent PyOb class
+        # Define another parent PyObClass
         class ParentTwo(PyOb):
-            """A dummy parent PyOb class"""
+            """A dummy parent PyObClass"""
 
             class PyObMeta:
 
@@ -230,9 +261,9 @@ class TestPyObClass:
                 uniques = {"d2", "e2", "f2"}
                 indexes = {"g2", "h2", "i2"}
 
-        # Define another child PyOb class
+        # Define another child PyObClass
         class ChildThree(ParentOne, ParentTwo):
-            """A dummy child PyOb class"""
+            """A dummy child PyObClass"""
 
             class PyObMeta:
 
@@ -270,3 +301,23 @@ class TestPyObClass:
                 "ii3",
             }
         )
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST STORE PROPERTY POINTS TO PYOB META STORE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_store_property_points_to_pyob_meta_store(self):
+        """Tests that the store property points to PyObClass.PyObMeta.store"""
+
+        # Define a dummy PyObClass
+        class DummyClass(PyOb):
+            """A dummy PyObClass"""
+
+        # Assert that DummyClass.store points to DummyClass.PyObMeta.store
+        assert id(DummyClass.store) == id(DummyClass.PyObMeta.store)
+
+        # Assert that DummyClass.obs points to DummyClass.PyObMeta.store
+        assert id(DummyClass.obs) == id(DummyClass.PyObMeta.store)
+
+        # Assert that DummyClass.objects points to DummyClass.PyObMeta.store
+        assert id(DummyClass.objects) == id(DummyClass.PyObMeta.store)

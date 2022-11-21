@@ -43,7 +43,8 @@ class TestPyObMetaClass:
         # Assert PyObMeta.store is an instance of PyObStore
         assert isinstance(PyObMeta.store, PyObStore)
 
-        # TODO: Assert that the store is empty
+        # Assert that the store is empty, i.e. has length of zero
+        assert len(PyObMeta.store) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT FREEZES FIELD SETS

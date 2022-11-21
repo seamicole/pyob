@@ -97,7 +97,7 @@ class PyObClass(type):
 
     @property
     def obs(cls):
-        """An alias for the PyObClass.store property"""
+        """Returns PyObClass.PyObMeta.store"""
 
         # Return PyObClass.store
         return cls.PyObMeta.store
@@ -108,7 +108,7 @@ class PyObClass(type):
 
     @property
     def objects(cls):
-        """An alias for trhe PyObClass.store property"""
+        """Returns PyObClass.PyObMeta.store"""
 
         # Return PyObClass.store
         return cls.PyObMeta.store

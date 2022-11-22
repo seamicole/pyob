@@ -26,7 +26,9 @@ from pyob.tools.sequence import freezeset
     ),
     sequence_type=sampled_from([list, set, tuple]),
 )
-def test_freezeset_properties(sequence: Sequence, sequence_type: Callable) -> None:
+def test_freezeset_properties(
+    sequence: Sequence[int], sequence_type: Callable[[Sequence[int]], Sequence[int]]
+) -> None:
     """Tests the properties of the pyob.tools.sequence.freezeset function"""
 
     # Cast sequence to type

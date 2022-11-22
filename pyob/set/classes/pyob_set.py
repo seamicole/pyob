@@ -33,7 +33,7 @@ class PyObSet:
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Init Method"""
 
         # Initialize obs
@@ -43,7 +43,7 @@ class PyObSet:
     # │ __LEN__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Length Method"""
 
         # Return the sum of all ob counts

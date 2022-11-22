@@ -306,7 +306,7 @@ class TestPyObClass:
     # │ TEST STORE PROPERTY POINTS TO PYOB META STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_store_property_points_to_pyob_meta_store(self):
+    def test_store_property_points_to_pyob_meta_store(self) -> None:
         """Tests that the store property points to PyObClass.PyObMeta.store"""
 
         # Define a dummy PyObClass

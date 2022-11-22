@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
 
 if TYPE_CHECKING:
+    from pyob.store.classes.pyob_store import PyObStore
     from pyob.types import Args, Kwargs
 
 
@@ -85,7 +86,7 @@ class PyObClass(type):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def store(cls):
+    def store(cls) -> PyObStore:
         """Returns PyObClass.PyObMeta.store"""
 
         # Return PyObClass.PyObMeta.store
@@ -96,7 +97,7 @@ class PyObClass(type):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def obs(cls):
+    def obs(cls) -> PyObStore:
         """Returns PyObClass.PyObMeta.store"""
 
         # Return PyObClass.store
@@ -107,7 +108,7 @@ class PyObClass(type):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def objects(cls):
+    def objects(cls) -> PyObStore:
         """Returns PyObClass.PyObMeta.store"""
 
         # Return PyObClass.store

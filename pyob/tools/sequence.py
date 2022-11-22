@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Sequence, TYPE_CHECKING
+from typing import Any, Sequence, TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def freezeset(sequence: HashableSequence) -> frozenset:
+def freezeset(sequence: HashableSequence) -> frozenset[Any]:
     """Recursively converts a hashable sequence into a frozenset"""
 
     # Return frozen set of the hashable sequence

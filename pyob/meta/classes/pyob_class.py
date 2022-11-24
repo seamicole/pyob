@@ -43,8 +43,7 @@ class PyObClass(type):
         pyob_meta_dict = PyObMeta and PyObMeta.__dict__
 
         # Initialize user-defined PyObMeta into a PyObMetaClass instance
-        # Ignore type checks to allow reassigning of PyObMeta to PyObMetaClass instance
-        PyObMeta = cls.PyObMeta = PyObMetaClass(**pyob_meta_dict)
+        _PyObMeta = cls._PyObMeta = PyObMetaClass(**pyob_meta_dict)
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ BASE CLASSES
@@ -63,23 +62,23 @@ class PyObClass(type):
             # └─────────────────────────────────────────────────────────────────────────
 
             # Extend to Parents of current PyObMeta
-            PyObMeta.Parents = PyObMeta.Parents + (Base,)
+            _PyObMeta.Parents = _PyObMeta.Parents + (Base,)
 
             # Extend current class to Children of parent PyObMeta
-            Base.PyObMeta.Children = Base.PyObMeta.Children + (cls,)
+            Base._PyObMeta.Children = Base._PyObMeta.Children + (cls,)
 
             # ┌─────────────────────────────────────────────────────────────────────────
             # │ FIELD SET INHERITANCE
             # └─────────────────────────────────────────────────────────────────────────
 
             # Inherit keys from parent
-            PyObMeta.keys = Base.PyObMeta.keys | PyObMeta.keys
+            _PyObMeta.keys = Base._PyObMeta.keys | _PyObMeta.keys
 
             # Inherit uniques from parent
-            PyObMeta.uniques = Base.PyObMeta.uniques | PyObMeta.uniques
+            _PyObMeta.uniques = Base._PyObMeta.uniques | _PyObMeta.uniques
 
             # Inherit indexes from parent
-            PyObMeta.indexes = Base.PyObMeta.indexes | PyObMeta.indexes
+            _PyObMeta.indexes = Base._PyObMeta.indexes | _PyObMeta.indexes
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ STORE
@@ -87,10 +86,10 @@ class PyObClass(type):
 
     @property
     def store(cls) -> PyObStore:
-        """Returns PyObClass.PyObMeta.store"""
+        """Returns PyObClass._PyObMeta.store"""
 
-        # Return PyObClass.PyObMeta.store
-        return cls.PyObMeta.store
+        # Return PyObClass._PyObMeta.store
+        return cls._PyObMeta.store
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ OBS
@@ -98,10 +97,10 @@ class PyObClass(type):
 
     @property
     def obs(cls) -> PyObStore:
-        """Returns PyObClass.PyObMeta.store"""
+        """Returns PyObClass._PyObMeta.store"""
 
         # Return PyObClass.store
-        return cls.PyObMeta.store
+        return cls._PyObMeta.store
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ OBJECTS
@@ -109,7 +108,7 @@ class PyObClass(type):
 
     @property
     def objects(cls) -> PyObStore:
-        """Returns PyObClass.PyObMeta.store"""
+        """Returns PyObClass._PyObMeta.store"""
 
         # Return PyObClass.store
-        return cls.PyObMeta.store
+        return cls._PyObMeta.store

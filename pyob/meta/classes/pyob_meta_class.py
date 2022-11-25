@@ -14,7 +14,7 @@ from pyob.store.classes.pyob_store import PyObStore
 from pyob.tools.sequence import freezeset
 
 if TYPE_CHECKING:
-    from pyob.types import Args, Kwargs, PyObClass
+    from pyob.types import Args, Kwargs, PyObClass, PyObStoreClass
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -40,7 +40,7 @@ class PyObMetaClass:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of store class
-    Store: type[PyObStore]
+    Store: PyObStoreClass
 
     # Declare type of store instance
     store: PyObStore
@@ -65,7 +65,7 @@ class PyObMetaClass:
     def __init__(
         self,
         *args: Args,
-        Store: type[PyObStore] | None = None,
+        Store: PyObStoreClass | None = None,
         keys: Sequence[str | Sequence[str]] | None = None,
         uniques: Sequence[str | Sequence[str]] | None = None,
         indexes: Sequence[str | Sequence[str]] | None = None,

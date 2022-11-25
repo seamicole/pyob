@@ -10,6 +10,8 @@ from typing import TYPE_CHECKING
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+from pyob.utils.sequence import FrozenDict
+
 if TYPE_CHECKING:
     from pyob.types import PyObClass
 
@@ -23,21 +25,31 @@ class PyObSet:
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: OBS
+    # │ TYPE DECLARATION: LENGTH
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Declare type of obs
-    obs: dict[PyObClass, int]
+    # Declare type of length
+    _length: int
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE DECLARATION: COUNTS BY PYOB
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of counts by pyob
+    _counts_by_pyob: FrozenDict[PyObClass, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self) -> None:
+    def __init__(self, _counts_by_pyob: dict[PyObClass, int] | None = None) -> None:
         """Init Method"""
 
-        # Initialize obs
-        self.obs = {}
+        # Initialize and freeze counts by pyob
+        self._counts_by_pyob = FrozenDict(_counts_by_pyob or {})
+
+        # Compute and set length of pyob set
+        self._length = sum(self._counts_by_pyob.values())
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __LEN__
@@ -46,5 +58,26 @@ class PyObSet:
     def __len__(self) -> int:
         """Length Method"""
 
-        # Return the sum of all ob counts
-        return sum(self.obs.values())
+        # Return length of pyob set
+        return self._length
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ LENGTH
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    @property
+    def length(self) -> int:
+        """Returns length of pyob set"""
+
+        # Return length
+        return self.__len__()
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ COUNT
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def count(self) -> int:
+        """Return length of pyob set"""
+
+        # Return length
+        return self.__len__()

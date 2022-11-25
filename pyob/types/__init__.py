@@ -11,6 +11,8 @@ from typing import Any, Hashable, Iterable, Mapping, Sequence, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.meta.classes.pyob_class import PyObClass as PyObClass  # noqa
+from pyob.store.classes.pyob_store import PyObStore as PyObStore  # noqa
+from pyob.utils.sequence import FrozenDict  # noqa
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -37,3 +39,9 @@ Kwargs = Mapping[str, object]
 
 PyObMeta = TypeVar("PyObMeta")
 PyObMetaClass = type[PyObMeta]
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ PYOB STORE
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+PyObStoreClass = type[PyObStore]

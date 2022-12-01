@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING
 from pyob.utils.sequence import FrozenDict
 
 if TYPE_CHECKING:
-    from pyob.types import PyObClass
+    from pyob.types import PyObInstance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -25,6 +25,13 @@ class PyObSet:
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE DECLARATION: COUNTS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of counts
+    _counts: FrozenDict[PyObInstance, int]
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
     # └─────────────────────────────────────────────────────────────────────────────────
 
@@ -32,24 +39,17 @@ class PyObSet:
     _length: int
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: COUNTS BY PYOB
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    # Declare type of counts by pyob
-    _counts_by_pyob: FrozenDict[PyObClass, int]
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts_by_pyob: dict[PyObClass, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObInstance, int] | None = None) -> None:
         """Init Method"""
 
-        # Initialize and freeze counts by pyob
-        self._counts_by_pyob = FrozenDict(_counts_by_pyob or {})
+        # Initialize and freeze counts
+        self._counts = FrozenDict(_counts or {})
 
         # Compute and set length of pyob set
-        self._length = sum(self._counts_by_pyob.values())
+        self._length = sum(self._counts.values())
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __LEN__

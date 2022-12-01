@@ -4,7 +4,6 @@
 
 from pyob.main.classes.pyob import PyOb
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
-from pyob.store.classes.pyob_store import PyObStore
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -281,11 +280,11 @@ class TestPyObClass:
         )
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST STORE PROPERTY POINTS TO PYOB META STORE
+    # │ TEST OBJECTS PROPERTIES POINT TO PYOB META STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_store_property_points_to_pyob_meta_store(self) -> None:
-        """Tests that the store property points to PyObClass._PyObMeta.store"""
+    def test_objects_properties_point_to_pyob_meta_store(self) -> None:
+        """Tests that the objects properties point to PyObClass._PyObMeta.store"""
 
         # Define a dummy PyObClass
         class DummyClass(PyOb):

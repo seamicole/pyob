@@ -39,9 +39,6 @@ class PyObMetaClass:
     # │ TYPE DECLARATION: STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    # Declare type of store class
-    Store: PyObStoreClass
-
     # Declare type of store instance
     store: PyObStore
 
@@ -89,11 +86,8 @@ class PyObMetaClass:
         # │ STORE
         # └─────────────────────────────────────────────────────────────────────────────
 
-        # Get store class
-        Store = Store or PyObStore
-
         # Initialize PyObStore instance from store class
-        self.store = Store()
+        self.store = PyObStore()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ FIELD SETS

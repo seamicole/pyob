@@ -168,36 +168,6 @@ class TestPyObClass:
         assert len(ChildTwo._PyObMeta.Children) == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST INIT RESPECTS CUSTOM PYOB STORE CLASSES
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def test_init_respects_custom_pyob_store_classes(self) -> None:
-        """Tests that a user can define a custom PyObStore class in PyObMeta"""
-
-        # Define a PyObClass with a default PyObStore
-        class DefaultPyObClass(PyOb):
-            """A dummy PyObClass"""
-
-        # Assert that the DefaultPyObClass._PyObMeta is initialized with a PyObStore
-        assert type(DefaultPyObClass._PyObMeta.store) is PyObStore
-
-        # Define a custom PyObStore class
-        class CustomStore(PyObStore):
-            """A dummy PyObStore"""
-
-        # Define a PyObClass with a custom PyObStore
-        class CustomPyObClass(PyOb):
-            """A dummy PyObClass"""
-
-            class PyObMeta:
-                """PyObMeta Class"""
-
-                Store = CustomStore
-
-        # Assert that the CustomPyObClass._PyObMeta is initialized with a CustomStore
-        assert type(CustomPyObClass._PyObMeta.store) is CustomStore
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT INHERITS FIELD SETS
     # └─────────────────────────────────────────────────────────────────────────────────
 

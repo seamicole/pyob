@@ -81,17 +81,6 @@ class PyObClass(type):
             _PyObMeta.indexes = Base._PyObMeta.indexes | _PyObMeta.indexes
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ STORE
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    @property
-    def store(cls) -> PyObStore:
-        """Returns PyObClass._PyObMeta.store"""
-
-        # Return PyObClass._PyObMeta.store
-        return cls._PyObMeta.store
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ OBS
     # └─────────────────────────────────────────────────────────────────────────────────
 

@@ -291,9 +291,6 @@ class TestPyObClass:
         class DummyClass(PyOb):
             """A dummy PyObClass"""
 
-        # Assert that DummyClass.store points to DummyClass._PyObMeta.store
-        assert id(DummyClass.store) == id(DummyClass._PyObMeta.store)
-
         # Assert that DummyClass.obs points to DummyClass._PyObMeta.store
         assert id(DummyClass.obs) == id(DummyClass._PyObMeta.store)
 

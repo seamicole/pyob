@@ -85,7 +85,7 @@ class PyObClass(type):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def obs(cls) -> PyObStore["cls"]:
+    def obs(cls) -> PyObStore:
         """Returns PyObClass._PyObMeta.store"""
 
         # Return PyObClass.store

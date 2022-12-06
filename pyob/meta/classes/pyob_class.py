@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import Generic, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -13,8 +13,7 @@ from typing import TYPE_CHECKING
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
 
 if TYPE_CHECKING:
-    from pyob.store.classes.pyob_store import PyObStore
-    from pyob.types import Args, Kwargs
+    from pyob.types import Args, Kwargs, PyObStore
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -22,7 +21,10 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class PyObClass(type):
+T = TypeVar("T")
+
+
+class PyObClass(type, Generic[T]):
     """The root metaclass for PyOb and all of its subclasses"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -43,7 +45,7 @@ class PyObClass(type):
         pyob_meta_dict = PyObMeta and PyObMeta.__dict__
 
         # Initialize user-defined PyObMeta into a PyObMetaClass instance
-        _PyObMeta = cls._PyObMeta = PyObMetaClass(**pyob_meta_dict)
+        _PyObMeta = cls._PyObMeta = PyObMetaClass[T](**pyob_meta_dict)
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ BASE CLASSES

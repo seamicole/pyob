@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import Generic, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING
 from pyob.utils.sequence import FrozenDict
 
 if TYPE_CHECKING:
-    from pyob.types import PyObInstance
+    from pyob.types import PyObClass
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -21,7 +21,10 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class PyObSet:
+T = TypeVar("T", bound=PyObClass)
+
+
+class PyObSet(Generic[T]):
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -29,7 +32,7 @@ class PyObSet:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: FrozenDict[PyObInstance, int]
+    _counts: FrozenDict[T, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
@@ -42,7 +45,7 @@ class PyObSet:
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[PyObInstance, int] | None = None) -> None:
+    def __init__(self, _counts: dict[T, int] | None = None) -> None:
         """Init Method"""
 
         # Initialize and freeze counts

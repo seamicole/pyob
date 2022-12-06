@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Sequence, TYPE_CHECKING
+from typing import Generic, Sequence, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -22,7 +22,10 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class PyObMetaClass:
+T = TypeVar("T", bound=PyObClass)
+
+
+class PyObMetaClass(Generic[T]):
     """The root (pseudo-)metaclass for user-defined PyObMeta classes"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -40,7 +43,7 @@ class PyObMetaClass:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of store instance
-    store: PyObStore
+    store: PyObStore[T]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: FIELD SETS
@@ -86,7 +89,7 @@ class PyObMetaClass:
         # └─────────────────────────────────────────────────────────────────────────────
 
         # Initialize PyObStore instance from store class
-        self.store = PyObStore()
+        self.store = PyObStore[T]()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ FIELD SETS

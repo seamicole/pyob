@@ -22,14 +22,14 @@ class TestPyObClass:
         """Tests that a PyObMeta class is initialized when the PyObClass is defined"""
 
         # Assert PyOb._PyObMeta is an instance of PyObClass
-        assert isinstance(PyOb._PyObMeta, PyObMetaClass)
+        assert type(PyOb._PyObMeta) is PyObMetaClass
 
         # Define a PyObClass with an inherited PyObMeta
         class InheritedPyObMeta(PyOb):
             """A dummy PyObClass whose PyObMeta is inherited from PyOb"""
 
         # Assert InheritedPyObMeta._PyObMeta is an instance of PyObClass
-        assert isinstance(InheritedPyObMeta._PyObMeta, PyObMetaClass)
+        assert type(InheritedPyObMeta._PyObMeta) is PyObMetaClass
 
         # Define a PyObClass with a redefined PyObMeta
         class RedefinedPyObMeta(PyOb):
@@ -39,7 +39,7 @@ class TestPyObClass:
                 """PyObMeta Class"""
 
         # Assert RedefinedPyObMeta._PyObMeta is an instance of PyObClass
-        assert isinstance(RedefinedPyObMeta._PyObMeta, PyObMetaClass)
+        assert type(RedefinedPyObMeta._PyObMeta) is PyObMetaClass
 
         # Assert that each of the above PyObMeta instances are distinct in memory
         assert (

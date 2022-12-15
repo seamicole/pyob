@@ -3,28 +3,23 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
-from pyob.set.classes.pyob_set import PyObSet
-from pyob.utils.classes.sequence import FrozenDict
 from pyob.utils.mixins.pyobs_mixin import PyObsMixin
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ TEST PYOB SET
+# │ TEST PYOBS MIXIN
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class TestPyObSet:
-    """A test class for pyob.set.classes.pyob_set.PyObSet"""
+class TestPyObsMixin:
+    """A test class for pyob.utils.mixins.pyobs_mixin.PyObsMixin"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST PYOB SET SUBCLASSES PYOBS MIXIN
+    # │ TEST LENGTH METHODS RETURN SUM OF COUNTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_pyob_set_subclasses_pyobs_mixin(self) -> None:
-        """Tests that PyObSet is a subclass of PyObsMixin"""
-
-        # Assert that PyObSet is a subclass of PyObsMixin
-        assert issubclass(PyObSet, PyObsMixin)
+    def test_length_methods_return_sum_of_counts(self) -> None:
+        """Tests that all length methods return the sum of PyObsMixin._counts"""
 
         # Define a dummy PyObClass
         class DummyClass(PyOb):
@@ -36,31 +31,17 @@ class TestPyObSet:
         # Define counts
         _counts = {d1: 1, d2: 2, d3: 3}
 
-        # Initialize dummy set
-        dummy_set = PyObSet(_counts=_counts)
+        # Initialize dummy PyObs
+        dummies = PyObsMixin(_counts=_counts)
 
-        # Assert that dummy set is an instance of PyObsMixin
-        assert isinstance(dummy_set, PyObsMixin)
+        # Get dummy set length
+        dummies_length = sum(_counts.values())
 
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST PYOB SET FREZES COUNTS
-    # └─────────────────────────────────────────────────────────────────────────────────
+        # Assert that the length dunder returns the correct value
+        assert dummies.__len__() == len(dummies) == dummies_length
 
-    def test_pyob_set_freezes_counts(self) -> None:
-        """Tests that PyObSet instances cast counts attribute to a FrozenDict"""
+        # Assert that the length property returns the correct value
+        assert dummies.length == dummies_length
 
-        # Define a dummy PyObClass
-        class DummyClass(PyOb):
-            """A dummy PyObClass"""
-
-        # Initialize dummy instances
-        d1, d2, d3 = (DummyClass(), DummyClass(), DummyClass())
-
-        # Define counts
-        _counts = {d1: 1, d2: 2, d3: 3}
-
-        # Initialize dummy set
-        dummy_set = PyObSet(_counts=_counts)
-
-        # Assert that dummy set counts is a FrozenDict
-        assert type(dummy_set._counts) is FrozenDict
+        # Assert that the count method returns the correct value
+        assert dummies.count() == dummies_length

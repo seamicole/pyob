@@ -47,7 +47,7 @@ class TestPyObMetaClass:
         PyObMeta = PyObMetaClass[Any]()
 
         # Assert PyObMeta.store is an instance of PyObStore
-        assert isinstance(PyObMeta.store, PyObStore)
+        assert type(PyObMeta.store) is PyObStore
 
         # Assert that the store is empty, i.e. has length of zero
         assert len(PyObMeta.store) == 0

@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Generic, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -21,10 +21,7 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-T = TypeVar("T")
-
-
-class PyObClass(type, Generic[T]):
+class PyObClass(type):
     """The root metaclass for PyOb and all of its subclasses"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -45,7 +42,7 @@ class PyObClass(type, Generic[T]):
         pyob_meta_dict = PyObMeta and PyObMeta.__dict__
 
         # Initialize user-defined PyObMeta into a PyObMetaClass instance
-        _PyObMeta = cls._PyObMeta = PyObMetaClass[T](**pyob_meta_dict)
+        _PyObMeta = cls._PyObMeta = PyObMetaClass[Any](**pyob_meta_dict)
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ BASE CLASSES
@@ -87,7 +84,7 @@ class PyObClass(type, Generic[T]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def obs(cls) -> PyObStore:
+    def obs(cls) -> PyObStore[Any]:
         """Returns PyObClass._PyObMeta.store"""
 
         # Return PyObClass.store
@@ -98,7 +95,7 @@ class PyObClass(type, Generic[T]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     @property
-    def objects(cls) -> PyObStore:
+    def objects(cls) -> PyObStore[Any]:
         """Returns PyObClass._PyObMeta.store"""
 
         # Return PyObClass.store

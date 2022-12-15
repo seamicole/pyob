@@ -4,16 +4,16 @@
 
 from __future__ import annotations
 
-from typing import Any, Hashable, Iterable, Mapping, Sequence, TypeVar
+from typing import Any, Hashable, Iterable, Mapping, Sequence
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.main.classes.pyob import PyOb as PyOb  # noqa
+from pyob.main.classes.pyob import PyOb as PyOb
 from pyob.meta.classes.pyob_class import PyObClass as PyObClass  # noqa
 from pyob.store.classes.pyob_store import PyObStore as PyObStore  # noqa
-from pyob.utils.sequence import FrozenDict  # noqa
+from pyob.utils.classes.sequence import FrozenDict as FrozenDict  # noqa
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -35,8 +35,7 @@ HashableSequence = Sequence[Hashable | "HashableSequence"]
 Kwargs = Mapping[str, object]
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ PYOB META
+# │ PYOB INSTANCE
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-PyObMeta = TypeVar("PyObMeta")
-PyObMetaClass = type[PyObMeta]
+PyObInstance = PyOb

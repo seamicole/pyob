@@ -11,21 +11,21 @@ from typing import Generic, Sequence, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.store.classes.pyob_store import PyObStore
-from pyob.tools.sequence import freezeset
+from pyob.utils.functions.sequence import freezeset
 
 if TYPE_CHECKING:
-    from pyob.types import Args, Kwargs, PyObClass
+    from pyob.types import Args, Kwargs, PyOb, PyObClass
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PYOB META CLASS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+# Define a PyObClass TypeVar
+PyObClassVar = TypeVar("PyObClassVar", bound="PyOb")
 
-T = TypeVar("T", bound=PyObClass)
 
-
-class PyObMetaClass(Generic[T]):
+class PyObMetaClass(Generic[PyObClassVar]):
     """The root (pseudo-)metaclass for user-defined PyObMeta classes"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -43,7 +43,7 @@ class PyObMetaClass(Generic[T]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of store instance
-    store: PyObStore[T]
+    store: PyObStore[PyObClassVar]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: FIELD SETS
@@ -89,7 +89,7 @@ class PyObMetaClass(Generic[T]):
         # └─────────────────────────────────────────────────────────────────────────────
 
         # Initialize PyObStore instance from store class
-        self.store = PyObStore[T]()
+        self.store = PyObStore()
 
         # ┌─────────────────────────────────────────────────────────────────────────────
         # │ FIELD SETS

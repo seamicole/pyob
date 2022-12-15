@@ -10,21 +10,22 @@ from typing import Generic, TYPE_CHECKING, TypeVar
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.utils.sequence import FrozenDict
+from pyob.utils.classes.sequence import FrozenDict
+from pyob.utils.mixins.pyobs_mixin import PyObsMixin
 
 if TYPE_CHECKING:
-    from pyob.types import PyObClass
+    from pyob.types import PyObInstance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PYOB SET
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+# Define a PyObInstance TypeVar
+PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
 
-T = TypeVar("T", bound=PyObClass)
 
-
-class PyObSet(Generic[T]):
+class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -32,55 +33,18 @@ class PyObSet(Generic[T]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: FrozenDict[T, int]
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: LENGTH
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    # Declare type of length
-    _length: int
+    _counts: FrozenDict[PyObInstanceVar, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[T, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObInstanceVar, int] | None = None) -> None:
         """Init Method"""
 
-        # Initialize and freeze counts
-        self._counts = FrozenDict(_counts or {})
+        # Call parent init method
+        super().__init__(_counts=_counts)
 
-        # Compute and set length of pyob set
-        self._length = sum(self._counts.values())
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __LEN__
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def __len__(self) -> int:
-        """Length Method"""
-
-        # Return length of pyob set
-        return self._length
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ LENGTH
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    @property
-    def length(self) -> int:
-        """Returns length of pyob set"""
-
-        # Return length
-        return self.__len__()
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ COUNT
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def count(self) -> int:
-        """Return length of pyob set"""
-
-        # Return length
-        return self.__len__()
+        # Freeze the PyObSet counts dictionary
+        # A PyObSet should be considered immutable
+        self._counts = FrozenDict(self._counts)

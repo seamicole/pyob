@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+from abc import ABCMeta
 from typing import TYPE_CHECKING, Any
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -21,7 +22,7 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class PyObClass(type):
+class PyObClass(ABCMeta):
     """The root metaclass for PyOb and all of its subclasses"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────

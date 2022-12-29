@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-from abc import ABC
 from typing import Generic, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -23,7 +22,7 @@ if TYPE_CHECKING:
 PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
 
 
-class PyObsMixin(ABC, Generic[PyObInstanceVar]):
+class PyObsMixin(Generic[PyObInstanceVar]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────

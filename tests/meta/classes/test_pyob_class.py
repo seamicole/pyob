@@ -1,8 +1,17 @@
 # ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ GENERAL IMPORTS
+# └─────────────────────────────────────────────────────────────────────────────────────
+
+import pytest
+
+from abc import ABCMeta, abstractmethod
+
+# ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
+from pyob.meta.classes.pyob_class import PyObClass
 from pyob.meta.classes.pyob_meta_class import PyObMetaClass
 
 
@@ -13,6 +22,40 @@ from pyob.meta.classes.pyob_meta_class import PyObMetaClass
 
 class TestPyObClass:
     """A test class for pyob.meta.classes.pyob_class.PyObClass"""
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST PYOB CLASS SUBCLASSES ABCMETA
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_pyob_class_subclasses_abc_meta(self) -> None:
+        """Tests that the PyObClass metaclass is a subclass of ABCMeta"""
+
+        # Assert PyObClass subclasses ABCMeta
+        assert issubclass(PyObClass, ABCMeta)
+
+        # Define a dummy PyObClass without an abstract method
+        class WithoutAbstractMethod(PyOb):
+            """A dummy PyObClass with no abstract methods"""
+
+            def standard_method(self) -> bool:
+                return True
+
+        # Assert that a PyObClass without an abstract method can be initialized
+        assert WithoutAbstractMethod().standard_method() is True
+
+        # Define a dummy PyObClass with an abstract method
+        class WithAbstractMethod(PyOb):
+            """A dummy PyObClass with an abstract method"""
+
+            @abstractmethod
+            def abstract_method(self) -> bool:
+                return False
+
+        # Initialize raises block
+        with pytest.raises(TypeError):
+
+            # Try to initialize a dummy class with an abstract method
+            WithAbstractMethod()  # type: ignore
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST INIT CREATES PYOB META CLASS INSTANCE

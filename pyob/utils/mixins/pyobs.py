@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Generic, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -18,11 +18,8 @@ if TYPE_CHECKING:
 # │ PYOBS MIXIN
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyObInstance TypeVar
-PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
 
-
-class PyObsMixin(Generic[PyObInstanceVar]):
+class PyObsMixin:
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -30,7 +27,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: dict[PyObInstanceVar, int] | "FrozenDict"[PyObInstanceVar, int]
+    _counts: dict[PyObInstance, int] | "FrozenDict"[PyObInstance, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
@@ -40,10 +37,20 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     _length: int
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ __ADD__
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def __add__(self, other: PyObInstance) -> None:
+        """Add Method"""
+
+        # Raise NotImplementedError
+        raise NotImplementedError
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[PyObInstanceVar, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObInstance, int] | None = None) -> None:
         """Init Method"""
 
         # Initialize counts dictionary
@@ -63,15 +70,14 @@ class PyObsMixin(Generic[PyObInstanceVar]):
         return self._length
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ LENGTH
+    # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    @property
-    def length(self) -> int:
-        """Returns length of pyob set"""
+    def __sub__(self, other: PyObInstance) -> None:
+        """Subtract Method"""
 
-        # Return length
-        return self.__len__()
+        # Raise NotImplementedError
+        raise NotImplementedError
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ COUNT
@@ -79,6 +85,17 @@ class PyObsMixin(Generic[PyObInstanceVar]):
 
     def count(self) -> int:
         """Return length of pyob set"""
+
+        # Return length
+        return self.__len__()
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ LENGTH
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    @property
+    def length(self) -> int:
+        """Returns length of pyob set"""
 
         # Return length
         return self.__len__()

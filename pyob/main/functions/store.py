@@ -4,44 +4,41 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
-
-from pyob.utils.mixins.pyobs_mixin import PyObsMixin
 
 if TYPE_CHECKING:
     from pyob.types import PyObInstance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ PYOB STORE
+# │ STORE PYOB
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyObInstance TypeVar
-PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
+
+def store_pyob(pyob: PyObInstance) -> PyObInstance:
+    """Adds a PyOb instance to the PyOb store"""
+
+    # Add PyOb instance to PyOb store
+    pyob.__class__._PyObMeta.store.add(pyob)
+
+    # Return PyOb instance
+    return pyob
 
 
-class PyObStore(PyObsMixin[PyObInstanceVar]):
-    """An abstract class for a primary collection of PyObClass instances"""
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __ADD__
-    # └─────────────────────────────────────────────────────────────────────────────────
+# ┌─────────────────────────────────────────────────────────────────────────────────────
+# │ UNSTORE PYOB
+# └─────────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObInstance) -> None:
-        """Add Method"""
 
-        # Add PyOb instance to counts
-        self._counts[other] = 1
+def unstore_pyob(pyob: PyObInstance) -> PyObInstance:
+    """Removes a PyOb instance from the PyOb store"""
 
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __SUB__
-    # └─────────────────────────────────────────────────────────────────────────────────
+    # Add PyOb instance to PyOb store
+    pyob.__class__._PyObMeta.store.remove(pyob)
 
-    def __sub__(self, other: PyObInstance) -> None:
-        """Subtract Method"""
-
-        # Remove PyOb instance from counts
-        self._counts.pop(other, None)
+    # Return PyOb instance
+    return pyob

@@ -5,7 +5,7 @@
 from pyob.main.classes.pyob import PyOb
 from pyob.set.classes.pyob_set import PyObSet
 from pyob.utils.classes.sequence import FrozenDict
-from pyob.utils.mixins.pyobs_mixin import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObsMixin
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

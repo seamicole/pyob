@@ -34,6 +34,15 @@ class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
 
     # Declare type of counts
     _counts: FrozenDict[PyObInstanceVar, int]
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ __ADD__
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def __add__(self, other: PyObInstance) -> None:
+        """Add Method"""
+
+        # Raise NotImplementedError
+        raise NotImplementedError
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
@@ -48,3 +57,13 @@ class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
         # Freeze the PyObSet counts dictionary
         # A PyObSet should be considered immutable
         self._counts = FrozenDict(self._counts)
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ __SUB__
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def __sub__(self, other: PyObInstance) -> None:
+        """Subtract Method"""
+
+        # Raise NotImplementedError
+        raise NotImplementedError

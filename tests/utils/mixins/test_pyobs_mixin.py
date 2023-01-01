@@ -3,7 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
-from pyob.utils.mixins.pyobs_mixin import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObsMixin
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

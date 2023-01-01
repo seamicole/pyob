@@ -3,7 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
-from pyob.utils.mixins.pyobs import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObs
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -11,15 +11,15 @@ from pyob.utils.mixins.pyobs import PyObsMixin
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class TestPyObsMixin:
-    """A test class for pyob.utils.mixins.pyobs_mixin.PyObsMixin"""
+class TestPyObs:
+    """A test class for pyob.utils.mixins.pyobs_mixin.PyObs"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST LENGTH METHODS RETURN SUM OF COUNTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     def test_length_methods_return_sum_of_counts(self) -> None:
-        """Tests that all length methods return the sum of PyObsMixin._counts"""
+        """Tests that all length methods return the sum of PyObs._counts"""
 
         # Define a dummy PyObClass
         class DummyClass(PyOb):
@@ -32,7 +32,7 @@ class TestPyObsMixin:
         _counts = {d1: 1, d2: 2, d3: 3}
 
         # Initialize dummy PyObs
-        dummies = PyObsMixin(_counts=_counts)
+        dummies = PyObs(_counts=_counts)
 
         # Get dummy set length
         dummies_length = sum(_counts.values())

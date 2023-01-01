@@ -4,17 +4,12 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.functions.store import store_pyob, unstore_pyob
 from pyob.meta.classes.pyob_class import PyObClass
-
-if TYPE_CHECKING:
-    from pyob.types import PyObInstance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -29,7 +24,7 @@ class PyOb(metaclass=PyObClass):
     # │ __NEG__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __neg__(self) -> PyObInstance:
+    def __neg__(self) -> PyOb:
         """Negative Method"""
 
         # Unstore and return the PyOb instance
@@ -39,7 +34,7 @@ class PyOb(metaclass=PyObClass):
     # │ __POS__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __pos__(self) -> PyObInstance:
+    def __pos__(self) -> PyOb:
         """Positive Method"""
 
         # Store and return the PyOb instance
@@ -49,7 +44,7 @@ class PyOb(metaclass=PyObClass):
     # │ STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def store(self) -> PyObInstance:
+    def store(self) -> PyOb:
         """Stores a PyOb instance in the PyOb store"""
 
         # Store and return the PyOb instance
@@ -59,7 +54,7 @@ class PyOb(metaclass=PyObClass):
     # │ UNSTORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def unstore(self) -> PyObInstance:
+    def unstore(self) -> PyOb:
         """Unstores a PyOb instance from the PyOb store"""
 
         # Unstore and return the PyOb instance

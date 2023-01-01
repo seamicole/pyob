@@ -11,21 +11,21 @@ from typing import Generic, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.utils.classes.sequence import FrozenDict
-from pyob.utils.mixins.pyobs import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObs
 
 if TYPE_CHECKING:
-    from pyob.types import PyObInstance
+    from pyob.types import PyOb
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PYOB SET
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyObInstance TypeVar
-PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
+# Define a PyOb TypeVar
+PyObVar = TypeVar("PyObVar", bound="PyOb")
 
 
-class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
+class PyObSet(PyObs[PyObVar], Generic[PyObVar]):
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -33,12 +33,13 @@ class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: FrozenDict[PyObInstanceVar, int]
+    _counts: FrozenDict[PyObVar, int]
+
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObInstance) -> None:
+    def __add__(self, other: PyObVar) -> None:
         """Add Method"""
 
         # Raise NotImplementedError
@@ -48,7 +49,7 @@ class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[PyObInstanceVar, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObVar, int] | None = None) -> None:
         """Init Method"""
 
         # Call parent init method
@@ -62,7 +63,7 @@ class PyObSet(PyObsMixin[PyObInstanceVar], Generic[PyObInstanceVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObInstance) -> None:
+    def __sub__(self, other: PyObVar) -> None:
         """Subtract Method"""
 
         # Raise NotImplementedError

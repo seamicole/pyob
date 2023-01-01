@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 if TYPE_CHECKING:
-    from pyob.types import PyObInstance
+    from pyob.types import PyOb
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def store_pyob(pyob: PyObInstance) -> PyObInstance:
+def store_pyob(pyob: PyOb) -> PyOb:
     """Adds a PyOb instance to the PyOb store"""
 
     # Add PyOb instance to PyOb store
@@ -34,7 +34,7 @@ def store_pyob(pyob: PyObInstance) -> PyObInstance:
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-def unstore_pyob(pyob: PyObInstance) -> PyObInstance:
+def unstore_pyob(pyob: PyOb) -> PyOb:
     """Removes a PyOb instance from the PyOb store"""
 
     # Add PyOb instance to PyOb store

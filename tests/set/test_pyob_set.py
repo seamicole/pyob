@@ -5,7 +5,7 @@
 from pyob.main.classes.pyob import PyOb
 from pyob.set.classes.pyob_set import PyObSet
 from pyob.utils.classes.sequence import FrozenDict
-from pyob.utils.mixins.pyobs import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObs
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
@@ -21,10 +21,10 @@ class TestPyObSet:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     def test_pyob_set_subclasses_pyobs_mixin(self) -> None:
-        """Tests that PyObSet is a subclass of PyObsMixin"""
+        """Tests that PyObSet is a subclass of PyObs"""
 
-        # Assert that PyObSet is a subclass of PyObsMixin
-        assert issubclass(PyObSet, PyObsMixin)
+        # Assert that PyObSet is a subclass of PyObs
+        assert issubclass(PyObSet, PyObs)
 
         # Define a dummy PyObClass
         class DummyClass(PyOb):
@@ -39,8 +39,8 @@ class TestPyObSet:
         # Initialize dummy set
         dummy_set = PyObSet(_counts=_counts)
 
-        # Assert that dummy set is an instance of PyObsMixin
-        assert isinstance(dummy_set, PyObsMixin)
+        # Assert that dummy set is an instance of PyObs
+        assert isinstance(dummy_set, PyObs)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST PYOB SET FREZES COUNTS

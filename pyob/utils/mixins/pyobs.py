@@ -11,18 +11,19 @@ from typing import Generic, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 if TYPE_CHECKING:
-    from pyob.types import FrozenDict, PyObInstance
+    from pyob.types import FrozenDict, PyOb
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
-# │ PYOBS MIXIN
+# │ PYOBS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyObInstance TypeVar
-PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
+# Define a PyOb TypeVar
+PyObVar = TypeVar("PyObVar", bound="PyOb")
+PyObsVar = TypeVar("PyObsVar", bound="PyObs")
 
 
-class PyObsMixin(Generic[PyObInstanceVar]):
+class PyObs(Generic[PyObVar, PyObsVar]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -30,7 +31,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: dict[PyObInstanceVar, int] | "FrozenDict"[PyObInstanceVar, int]
+    _counts: dict[PyObVar, int] | "FrozenDict"[PyObVar, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
@@ -43,7 +44,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObInstanceVar) -> None:
+    def __add__(self, other: PyObVar) -> PyObsVar:
         """Add Method"""
 
         # Raise NotImplementedError
@@ -53,7 +54,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[PyObInstanceVar, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObVar, int] | None = None) -> None:
         """Init Method"""
 
         # Initialize counts dictionary
@@ -76,7 +77,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObInstanceVar) -> None:
+    def __sub__(self, other: PyObVar) -> PyObsVar:
         """Subtract Method"""
 
         # Raise NotImplementedError
@@ -86,7 +87,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ ADD
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def add(self, item: PyObInstanceVar) -> None:
+    def add(self, item: PyObVar) -> PyObsVar:
         """Adds an item to the collection of PyObs"""
 
         # Call parent add method
@@ -117,7 +118,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ REMOVE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def remove(self, item: PyObInstanceVar) -> None:
+    def remove(self, item: PyObVar) -> PyObsVar:
         """Removes an item from the collection of PyObs"""
 
         # Call parent sub method

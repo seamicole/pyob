@@ -28,21 +28,28 @@ class PyObStore(PyObsMixin[PyObInstanceVar]):
     """An abstract class for a primary collection of PyObClass instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE DECLARATION: COUNTS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of counts
+    _counts: dict[PyObInstanceVar, int]
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObInstance) -> None:
+    def __add__(self, item: PyObInstanceVar) -> None:
         """Add Method"""
 
         # Add PyOb instance to counts
-        self._counts[other] = 1
+        self._counts[item] = 1
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObInstance) -> None:
+    def __sub__(self, item: PyObInstanceVar) -> None:
         """Subtract Method"""
 
         # Remove PyOb instance from counts
-        self._counts.pop(other, None)
+        self._counts.pop(item, None)

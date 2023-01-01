@@ -43,7 +43,7 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObInstance) -> None:
+    def __add__(self, other: PyObInstanceVar) -> None:
         """Add Method"""
 
         # Raise NotImplementedError
@@ -76,11 +76,21 @@ class PyObsMixin(Generic[PyObInstanceVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObInstance) -> None:
+    def __sub__(self, other: PyObInstanceVar) -> None:
         """Subtract Method"""
 
         # Raise NotImplementedError
         raise NotImplementedError
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ ADD
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def add(self, item: PyObInstanceVar) -> None:
+        """Adds an item to the collection of PyObs"""
+
+        # Call parent add method
+        return self.__add__(item)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ COUNT
@@ -102,3 +112,13 @@ class PyObsMixin(Generic[PyObInstanceVar]):
 
         # Return length
         return self.__len__()
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ REMOVE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def remove(self, item: PyObInstanceVar) -> None:
+        """Removes an item from the collection of PyObs"""
+
+        # Call parent sub method
+        return self.__sub__(item)

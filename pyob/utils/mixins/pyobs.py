@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import Generic, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -18,8 +18,11 @@ if TYPE_CHECKING:
 # │ PYOBS MIXIN
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+# Define a PyObInstance TypeVar
+PyObInstanceVar = TypeVar("PyObInstanceVar", bound="PyObInstance")
 
-class PyObsMixin:
+
+class PyObsMixin(Generic[PyObInstanceVar]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -27,7 +30,7 @@ class PyObsMixin:
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: dict[PyObInstance, int] | "FrozenDict"[PyObInstance, int]
+    _counts: dict[PyObInstanceVar, int] | "FrozenDict"[PyObInstanceVar, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
@@ -50,7 +53,7 @@ class PyObsMixin:
     # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __init__(self, _counts: dict[PyObInstance, int] | None = None) -> None:
+    def __init__(self, _counts: dict[PyObInstanceVar, int] | None = None) -> None:
         """Init Method"""
 
         # Initialize counts dictionary

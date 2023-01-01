@@ -11,7 +11,7 @@ from typing import Generic, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.utils.classes.sequence import FrozenDict
-from pyob.utils.mixins.pyobs_mixin import PyObsMixin
+from pyob.utils.mixins.pyobs import PyObsMixin
 
 if TYPE_CHECKING:
     from pyob.types import PyObInstance

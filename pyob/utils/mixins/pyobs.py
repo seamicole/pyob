@@ -20,11 +20,13 @@ if TYPE_CHECKING:
 
 # Define a PyOb TypeVar
 PyObVar = TypeVar("PyObVar", bound="PyOb")
-PyObsVar = TypeVar("PyObsVar", bound="PyObs")
 
 
-class PyObs(Generic[PyObVar, PyObsVar]):
+class PyObs(Generic[PyObVar]):
     """An abstract class with methods for handling a collection of PyOb instances"""
+
+    # Define a self TypeVar
+    Self = TypeVar("Self", bound="PyObs[PyObVar]")
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: COUNTS
@@ -44,7 +46,7 @@ class PyObs(Generic[PyObVar, PyObsVar]):
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObVar) -> PyObsVar:
+    def __add__(self: Self, other: PyObVar) -> Self:
         """Add Method"""
 
         # Raise NotImplementedError
@@ -77,7 +79,7 @@ class PyObs(Generic[PyObVar, PyObsVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObVar) -> PyObsVar:
+    def __sub__(self: Self, other: PyObVar) -> Self:
         """Subtract Method"""
 
         # Raise NotImplementedError
@@ -87,7 +89,7 @@ class PyObs(Generic[PyObVar, PyObsVar]):
     # │ ADD
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def add(self, item: PyObVar) -> PyObsVar:
+    def add(self: Self, item: PyObVar) -> Self:
         """Adds an item to the collection of PyObs"""
 
         # Call parent add method
@@ -118,7 +120,7 @@ class PyObs(Generic[PyObVar, PyObsVar]):
     # │ REMOVE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def remove(self, item: PyObVar) -> PyObsVar:
+    def remove(self: Self, item: PyObVar) -> Self:
         """Removes an item from the collection of PyObs"""
 
         # Call parent sub method

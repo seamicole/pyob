@@ -39,11 +39,11 @@ class PyObSet(PyObs[PyObVar], Generic[PyObVar]):
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, other: PyObVar) -> None:
+    def __add__(self, other: PyObVar) -> PyObSet[PyObVar]:
         """Add Method"""
 
-        # Raise NotImplementedError
-        raise NotImplementedError
+        # Return PyOb set
+        return self
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __INIT__
@@ -63,8 +63,8 @@ class PyObSet(PyObs[PyObVar], Generic[PyObVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, other: PyObVar) -> None:
+    def __sub__(self, other: PyObVar) -> PyObSet[PyObVar]:
         """Subtract Method"""
 
-        # Raise NotImplementedError
-        raise NotImplementedError
+        # Return PyOb set
+        return self

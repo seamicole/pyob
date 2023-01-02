@@ -16,10 +16,10 @@ class TestPyObStore:
     """A test class for pyob.set.classes.pyob_store.PyObStore"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST PYOB STORE SUBCLASSES PYOBS MIXIN
+    # │ TEST PYOB STORE SUBCLASSES PYOBS
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def test_pyob_store_subclasses_pyobs_mixin(self) -> None:
+    def test_pyob_store_subclasses_pyobs(self) -> None:
         """Tests that PyObStore is a subclass of PyObs"""
 
         # Assert that PyObSet is a subclass of PyObs
@@ -82,7 +82,7 @@ class TestPyObStore:
         assert dummy_store._counts == {d1: 1, d2: 1}
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TEST SUM DECREMENTS COUNT
+    # │ TEST SUB DECREMENTS COUNT
     # └─────────────────────────────────────────────────────────────────────────────────
 
     def test_sub_decrements_count(self) -> None:

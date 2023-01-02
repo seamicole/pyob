@@ -25,6 +25,10 @@ PyObVar = TypeVar("PyObVar", bound="PyOb")
 class PyObs(Generic[PyObVar]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TYPE VARIABLE: SELF
+    # └─────────────────────────────────────────────────────────────────────────────────
+
     # Define a self TypeVar
     Self = TypeVar("Self", bound="PyObs[PyObVar]")
 

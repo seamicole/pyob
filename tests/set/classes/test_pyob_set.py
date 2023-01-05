@@ -26,9 +26,9 @@ class TestPyObSet:
         # Assert that PyObSet is a subclass of PyObs
         assert issubclass(PyObSet, PyObs)
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy instances
         d1, d2, d3 = (DummyClass(), DummyClass(), DummyClass())
@@ -49,9 +49,9 @@ class TestPyObSet:
     def test_init_freezes_counts(self) -> None:
         """Tests that init method casts counts attribute to a FrozenDict"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy instances
         d1, d2, d3 = (DummyClass(), DummyClass(), DummyClass())
@@ -72,9 +72,9 @@ class TestPyObSet:
     def test_init_removes_zero_counts(self) -> None:
         """Tests that init method removes PyObs with a count of zero"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy instances
         d1, d2, d3, d4 = (DummyClass(), DummyClass(), DummyClass(), DummyClass())
@@ -99,7 +99,7 @@ class TestPyObSet:
 
         # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy instances
         d1, d2, d3 = (DummyClass(), DummyClass(), DummyClass())

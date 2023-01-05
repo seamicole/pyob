@@ -77,11 +77,11 @@ class PyObMetaClass(Generic[PyObClassVar]):
         # └─────────────────────────────────────────────────────────────────────────────
 
         # Initialize tuple of parent classes
-        # i.e. The subset of bases that are also PyObClasses
+        # i.e. The subset of bases that are also PyOb classes
         self.Parents = ()
 
         # Initialize tuple of child classes
-        # i.e. Any PyObClasses that end up inheriting from the current class
+        # i.e. Any PyOb classes that end up inheriting from the current class
         self.Children = ()
 
         # ┌─────────────────────────────────────────────────────────────────────────────

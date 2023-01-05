@@ -25,9 +25,9 @@ class TestPyObStore:
         # Assert that PyObSet is a subclass of PyObs
         assert issubclass(PyObStore, PyObs)
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy store
         dummy_store = PyObStore[DummyClass]()
@@ -44,7 +44,7 @@ class TestPyObStore:
 
         # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Initialize dummy PyOb store
         dummy_store = PyObStore[DummyClass]()
@@ -68,9 +68,9 @@ class TestPyObStore:
     def test_store_adds_pyob_instance_to_counts(self) -> None:
         """Tests that store method adds a PyOb instance to counts dictionary"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Get dummy store
         dummy_store = DummyClass._PyObMeta.store
@@ -101,9 +101,9 @@ class TestPyObStore:
     def test_unstore_removes_pyob_instance_from_counts(self) -> None:
         """Tests that unstore method removes a PyOb instance from counts dictionary"""
 
-        # Define a dummy PyObClass
+        # Define a dummy PyOb class
         class DummyClass(PyOb):
-            """A dummy PyObClass"""
+            """A dummy PyOb class"""
 
         # Get dummy store
         dummy_store = DummyClass._PyObMeta.store

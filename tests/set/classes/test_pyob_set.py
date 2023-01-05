@@ -86,9 +86,9 @@ class TestPyObSet:
         dummy_set = PyObSet[DummyClass](_counts=_counts)
 
         # Assert that PyObs with a count of zero or less have been removed
-        assert dummy_set._counts == {
-            pyob: count for pyob, count in _counts.items() if count > 0
-        }
+        assert dummy_set._counts == FrozenDict(
+            {pyob: count for pyob, count in _counts.items() if count > 0}
+        )
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST LENGTH METHODS RETURN SUM OF COUNTS

@@ -52,6 +52,9 @@ class TestPyObStore:
         # Assert that the store counts is an empty dictionary
         assert dummy_store._counts == {}
 
+        # Assert that the length attribute has the correct value
+        assert dummy_store._length == 0
+
         # Assert that the length dunder returns the correct value
         assert dummy_store.__len__() == len(dummy_store) == 0
 
@@ -95,6 +98,71 @@ class TestPyObStore:
         assert dummy_store._counts == {d1: 1}
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST STORE INCREMENTS LENGTH
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_store_increments_length(self) -> None:
+        """Tests that store method increments length attribute"""
+
+        # Define a dummy PyOb class
+        class DummyClass(PyOb):
+            """A dummy PyOb class"""
+
+        # Get dummy store
+        dummy_store = DummyClass._PyObMeta.store
+
+        # Assert that the length of the PyOb store is zero
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 0
+        )
+
+        # Initialize dummy instance
+        d1 = DummyClass()
+
+        # Add instance to store
+        dummy_store = dummy_store.store(d1)
+
+        # Assert that the length of the PyOb store is one
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 1
+        )
+
+        # Try to add the same instance to the store again
+        dummy_store = dummy_store.store(d1)
+
+        # Assert that the length of the PyOb store is still one
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 1
+        )
+
+        # Initialize dummy instance
+        d2 = DummyClass()
+
+        # Add instance to store
+        dummy_store = dummy_store.store(d2)
+
+        # Assert that the length of the PyOb store is two
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 2
+        )
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST UNSTORE REMOVES PYOB INSTANCE FROM COUNTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
@@ -128,3 +196,82 @@ class TestPyObStore:
 
         # Assert that the dummy store counts haven't changed
         assert dummy_store._counts == {}
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST UNSTORE DECREMENTS LENGTH
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_unstore_decrements_length(self) -> None:
+        """Tests that unstore method decrements length attribute"""
+
+        # Define a dummy PyOb class
+        class DummyClass(PyOb):
+            """A dummy PyOb class"""
+
+        # Get dummy store
+        dummy_store = DummyClass._PyObMeta.store
+
+        # Initialize dummy instances
+        d1 = DummyClass()
+        d2 = DummyClass()
+
+        # Add instances to store
+        dummy_store = dummy_store.store(d1)
+        dummy_store = dummy_store.store(d2)
+
+        # Assert that the length of the PyOb store is two
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 2
+        )
+
+        # Remove an instance from the store
+        dummy_store = dummy_store.unstore(d2)
+
+        # Assert that the length of the PyOb store is now one
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 1
+        )
+
+        # Try to remove the same instance from the store
+        dummy_store = dummy_store.unstore(d2)
+
+        # Assert that the length of the PyOb store is still one
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 1
+        )
+
+        # Remove the other instance from the store
+        dummy_store = dummy_store.unstore(d1)
+
+        # Assert that the length of the PyOb store is now zero
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 0
+        )
+
+        # Try to remove the same instance from the store
+        dummy_store = dummy_store.unstore(d1)
+
+        # Assert that the length of the PyOb store is still zero
+        assert (
+            dummy_store._length
+            == len(dummy_store)
+            == dummy_store.length
+            == dummy_store.count()
+            == 0
+        )

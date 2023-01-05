@@ -113,6 +113,9 @@ class TestPyObSet:
         # Get dummy set length
         dummy_set_length = sum(_counts.values())
 
+        # Assert that the length dunder has the correct value
+        assert dummy_set._length == dummy_set_length
+
         # Assert that the length dunder returns the correct value
         assert dummy_set.__len__() == len(dummy_set) == dummy_set_length
 

@@ -37,7 +37,7 @@ class TestPyObSet:
         _counts = {d1: 1, d2: 2, d3: 3}
 
         # Initialize dummy set
-        dummy_set = PyObSet(_counts=_counts)
+        dummy_set = PyObSet[DummyClass](_counts=_counts)
 
         # Assert that dummy set is an instance of PyObs
         assert isinstance(dummy_set, PyObs)
@@ -60,7 +60,39 @@ class TestPyObSet:
         _counts = {d1: 1, d2: 2, d3: 3}
 
         # Initialize dummy set
-        dummy_set = PyObSet(_counts=_counts)
+        dummy_set = PyObSet[DummyClass](_counts=_counts)
 
         # Assert that dummy set counts is a FrozenDict
         assert type(dummy_set._counts) is FrozenDict
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST LENGTH METHODS RETURN SUM OF COUNTS
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_length_methods_return_sum_of_counts(self) -> None:
+        """Tests that all length methods return the sum of PyObs._counts"""
+
+        # Define a dummy PyOb class
+        class DummyClass(PyOb):
+            """A dummy PyObClass"""
+
+        # Initialize dummy instances
+        d1, d2, d3 = (DummyClass(), DummyClass(), DummyClass())
+
+        # Define counts
+        _counts = {d1: 1, d2: 2, d3: 3}
+
+        # Initialize dummy PyOb set
+        dummy_set = PyObSet[DummyClass](_counts=_counts)
+
+        # Get dummy set length
+        dummy_set_length = sum(_counts.values())
+
+        # Assert that the length dunder returns the correct value
+        assert dummy_set.__len__() == len(dummy_set) == dummy_set_length
+
+        # Assert that the length property returns the correct value
+        assert dummy_set.length == dummy_set_length
+
+        # Assert that the count method returns the correct value
+        assert dummy_set.count() == dummy_set_length

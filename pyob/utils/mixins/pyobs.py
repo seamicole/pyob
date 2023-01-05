@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Generic, TYPE_CHECKING, TypeVar
+from typing import Generic, Literal, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -18,11 +18,11 @@ if TYPE_CHECKING:
 # │ PYOBS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyOb TypeVar
-PyObVar = TypeVar("PyObVar", bound="PyOb")
+# Define a PyOb instance TypeVar
+PyObInstance = TypeVar("PyObInstance", bound="PyOb")
 
 
-class PyObs(Generic[PyObVar]):
+class PyObs(Generic[PyObInstance]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -30,14 +30,14 @@ class PyObs(Generic[PyObVar]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Define a self TypeVar
-    Self = TypeVar("Self", bound="PyObs[PyObVar]")
+    Self = TypeVar("Self", bound="PyObs[PyObInstance]")
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: COUNTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: dict[PyObVar, int] | "FrozenDict"[PyObVar, int]
+    _counts: dict[PyObInstance, Literal[1]] | "FrozenDict"[PyObInstance, int]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TYPE DECLARATION: LENGTH
@@ -50,24 +50,11 @@ class PyObs(Generic[PyObVar]):
     # │ __ADD__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self: Self, other: PyObVar) -> Self:
+    def __add__(self: Self, item: PyObInstance) -> Self:
         """Add Method"""
 
         # Raise NotImplementedError
         raise NotImplementedError
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __INIT__
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def __init__(self, _counts: dict[PyObVar, int] | None = None) -> None:
-        """Init Method"""
-
-        # Initialize counts dictionary
-        self._counts = _counts or {}
-
-        # Compute and set length of pyob set
-        self._length = sum(self._counts.values())
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __LEN__
@@ -83,21 +70,11 @@ class PyObs(Generic[PyObVar]):
     # │ __SUB__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self: Self, other: PyObVar) -> Self:
+    def __sub__(self: Self, item: PyObInstance) -> Self:
         """Subtract Method"""
 
         # Raise NotImplementedError
         raise NotImplementedError
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ ADD
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def add(self: Self, item: PyObVar) -> Self:
-        """Adds an item to the collection of PyObs"""
-
-        # Call parent add method
-        return self.__add__(item)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ COUNT
@@ -119,13 +96,3 @@ class PyObs(Generic[PyObVar]):
 
         # Return length
         return self.__len__()
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ REMOVE
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    def remove(self: Self, item: PyObVar) -> Self:
-        """Removes an item from the collection of PyObs"""
-
-        # Call parent sub method
-        return self.__sub__(item)

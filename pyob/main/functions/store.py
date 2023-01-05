@@ -23,7 +23,7 @@ def store_pyob(pyob: PyOb) -> PyOb:
     """Adds a PyOb instance to the PyOb store"""
 
     # Add PyOb instance to PyOb store
-    pyob.__class__._PyObMeta.store.add(pyob)
+    pyob.__class__._PyObMeta.store.store(pyob)
 
     # Return PyOb instance
     return pyob
@@ -37,8 +37,8 @@ def store_pyob(pyob: PyOb) -> PyOb:
 def unstore_pyob(pyob: PyOb) -> PyOb:
     """Removes a PyOb instance from the PyOb store"""
 
-    # Add PyOb instance to PyOb store
-    pyob.__class__._PyObMeta.store.remove(pyob)
+    # Remove PyOb instance from PyOb store
+    pyob.__class__._PyObMeta.store.unstore(pyob)
 
     # Return PyOb instance
     return pyob

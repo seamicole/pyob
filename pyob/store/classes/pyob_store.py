@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, TypeVar
+from typing import Literal, TYPE_CHECKING, TypeVar
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
 # │ PROJECT IMPORTS
@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 # │ PYOB STORE
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-# Define a PyOb TypeVar
-PyObVar = TypeVar("PyObVar", bound="PyOb")
+# Define a PyOb instance TypeVar
+PyObInstance = TypeVar("PyObInstance", bound="PyOb")
 
 
-class PyObStore(PyObs[PyObVar]):
+class PyObStore(PyObs[PyObInstance]):
     """An abstract class for a primary collection of PyObClass instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
@@ -32,14 +32,27 @@ class PyObStore(PyObs[PyObVar]):
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
-    _counts: dict[PyObVar, int]
+    _counts: dict[PyObInstance, Literal[1]]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __ADD__
+    # │ __INIT__
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __add__(self, item: PyObVar) -> PyObStore[PyObVar]:
-        """Add Method"""
+    def __init__(self) -> None:
+        """Init Method"""
+
+        # Set counts attribute
+        self._counts = {}
+
+        # Set length attribute
+        self._length = 0
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ STORE
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def store(self, item: PyObInstance) -> PyObStore[PyObInstance]:
+        """Adds a PyOb instance to the PyOb store"""
 
         # Add PyOb instance to counts
         self._counts[item] = 1
@@ -48,13 +61,13 @@ class PyObStore(PyObs[PyObVar]):
         return self
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ __SUB__
+    # │ UNSTORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
-    def __sub__(self, item: PyObVar) -> PyObStore[PyObVar]:
-        """Subtract Method"""
+    def unstore(self, item: PyObInstance) -> PyObStore[PyObInstance]:
+        """Removes a PyOb instance from the PyOb store"""
 
-        # Remove PyOb instance from counts
+        # Pop PyOb instance from counts
         self._counts.pop(item, None)
 
         # Return PyOb store

@@ -90,14 +90,3 @@ class PyObClass(ABCMeta):
 
         # Return PyObClass.store
         return cls._PyObMeta.store
-
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ OBJECTS
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    @property
-    def objects(cls) -> PyObStore[Any]:
-        """Returns PyObClass._PyObMeta.store"""
-
-        # Return PyObClass.store
-        return cls._PyObMeta.store

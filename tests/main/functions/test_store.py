@@ -28,7 +28,7 @@ def test_store_pyob_calls_store_method() -> None:
     d1 = DummyClass()
 
     # Initialize mock patch block
-    with patch.object(d1._PyObMeta.store, "store") as mock:
+    with patch.object(DummyClass._PyObMeta.store, "store") as mock:
 
         # Add dummy instance to store
         store_pyob(d1)
@@ -53,7 +53,7 @@ def test_unstore_pyob_calls_unstore_method() -> None:
     d1 = DummyClass()
 
     # Initialize mock patch block
-    with patch.object(d1._PyObMeta.store, "unstore") as mock:
+    with patch.object(DummyClass._PyObMeta.store, "unstore") as mock:
 
         # Add dummy instance to store
         unstore_pyob(d1)

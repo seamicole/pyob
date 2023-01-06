@@ -48,8 +48,8 @@ class TestPyObClass:
             """A dummy PyOb class with an abstract method"""
 
             @abstractmethod
-            def abstract_method(self) -> bool:
-                return False
+            def abstract_method(self) -> None:
+                """An abstract method"""
 
         # Initialize raises block
         with pytest.raises(TypeError):

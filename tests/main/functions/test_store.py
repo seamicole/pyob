@@ -18,7 +18,7 @@ from pyob.main.functions.store import store_pyob, unstore_pyob
 
 
 def test_store_pyob_calls_store_method() -> None:
-    """Tests that function calls PyObStore.store(pyob)"""
+    """Tests that store_pyob calls PyObStore.store"""
 
     # Define a dummy PyOb class
     class DummyClass(PyOb):
@@ -43,7 +43,7 @@ def test_store_pyob_calls_store_method() -> None:
 
 
 def test_unstore_pyob_calls_unstore_method() -> None:
-    """Tests that function calls PyObStore.unstore(pyob)"""
+    """Tests that unstore_pyob calls PyObStore.unstore"""
 
     # Define a dummy PyOb class
     class DummyClass(PyOb):

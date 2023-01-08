@@ -86,8 +86,8 @@ class InvalidTypeError(Error):
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 
-class InvalidTypeError(InvalidTypeError):
-    """Invalid Type Error"""
+class UnexpectedTypeError(InvalidTypeError):
+    """Unexpected Type Error"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ CLASS ATTRIBUTES

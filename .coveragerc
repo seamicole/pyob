@@ -1,4 +1,11 @@
 [report]
 exclude_lines = 
+
+    # Exclude no cover
     pragma: no cover
+    
+    # Exclude type checking
     if TYPE_CHECKING:
+    
+    # Exclude NotImplementedError
+    raise NotImplementedError

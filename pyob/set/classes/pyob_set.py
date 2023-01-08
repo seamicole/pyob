@@ -29,7 +29,7 @@ class PyObSet(PyObs[PyObInstance], Generic[PyObInstance]):
     """An abstract class for a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: COUNTS
+    # │ CLASS ATTRIBUTES
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts

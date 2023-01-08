@@ -10,6 +10,8 @@ from typing import Literal, TYPE_CHECKING, TypeVar
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
+from pyob.utils.exceptions.validation import InvalidTypeError, UnexpectedTypeError
+from pyob.utils.functions.check import is_pyob_instance
 from pyob.utils.mixins.pyobs import PyObs
 
 if TYPE_CHECKING:
@@ -28,8 +30,11 @@ class PyObStore(PyObs[PyObInstance]):
     """An abstract class for a primary collection of PyObClass instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: COUNTS
+    # │ CLASS ATTRIBUTES
     # └─────────────────────────────────────────────────────────────────────────────────
+
+    # Declare type of Class
+    _Class: type[PyObInstance] | None
 
     # Declare type of counts
     _counts: dict[PyObInstance, Literal[1]]
@@ -40,6 +45,9 @@ class PyObStore(PyObs[PyObInstance]):
 
     def __init__(self) -> None:
         """Init Method"""
+
+        # Initialize Class to None
+        self._Class = None
 
         # Set counts attribute
         self._counts = {}
@@ -53,6 +61,35 @@ class PyObStore(PyObs[PyObInstance]):
 
     def store(self, item: PyObInstance) -> PyObStore[PyObInstance]:
         """Adds a PyOb instance to the PyOb store"""
+
+        # Check if Class is None
+        if self._Class is None:
+
+            # Check if item is not a PyObInstance
+            if not is_pyob_instance(item):
+
+                # Raise InvalidTypeError
+                raise InvalidTypeError(
+                    "Only PyOb instances can be added to a PyOb store",
+                    received=item.__class__,
+                )
+
+            # Set class according to PyOb instance
+            self._Class = item.__class__
+
+        # Otherwise handle case of existing Class
+        else:
+
+            # Check if class of item does not match existing class
+            # As PyOb stores should only allow instances of the same PyOb class
+            if item.__class__ is not self._Class:
+
+                # Raise UnexpectedTypeError
+                raise UnexpectedTypeError(
+                    "A PyOb store can only contain instances of the same PyOb class",
+                    expected=self._Class,
+                    received=item.__class__,
+                )
 
         # Determine if length should be incremented
         # i.e. PyOb instance was not already stored

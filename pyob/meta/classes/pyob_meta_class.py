@@ -29,7 +29,7 @@ class PyObMetaClass(Generic[PyObClassVar]):
     """The root (pseudo-)metaclass for user-defined PyObMeta classes"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: PARENTS AND CHILDREN
+    # │ CLASS ATTRIBUTES: PARENTS AND CHILDREN
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of Parents
@@ -39,14 +39,14 @@ class PyObMetaClass(Generic[PyObClassVar]):
     Children: tuple[PyObClass, ...]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: STORE
+    # │ CLASS ATTRIBUTES: STORE
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of store instance
     store: PyObStore[PyObClassVar]
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: FIELD SETS
+    # │ CLASS ATTRIBUTES: FIELD SETS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of key fields

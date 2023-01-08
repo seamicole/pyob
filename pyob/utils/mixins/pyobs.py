@@ -26,25 +26,21 @@ class PyObs(Generic[PyObInstance]):
     """An abstract class with methods for handling a collection of PyOb instances"""
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE VARIABLE: SELF
+    # │ TYPE DECLARATIONS
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Define a self TypeVar
     Self = TypeVar("Self", bound="PyObs[PyObInstance]")
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: COUNTS
+    # │ CLASS ATTRIBUTES
     # └─────────────────────────────────────────────────────────────────────────────────
 
     # Declare type of counts
     _counts: dict[PyObInstance, Literal[1]] | "FrozenDict"[PyObInstance, int]
 
-    # ┌─────────────────────────────────────────────────────────────────────────────────
-    # │ TYPE DECLARATION: LENGTH
-    # └─────────────────────────────────────────────────────────────────────────────────
-
-    # Declare type of length
-    _length: int
+    # Declare type and value of length
+    _length: int = 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ __ADD__

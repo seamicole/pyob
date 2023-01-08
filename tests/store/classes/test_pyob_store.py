@@ -65,6 +65,26 @@ class TestPyObStore:
         assert dummy_store.count() == 0
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST STORE RETURNS SELF
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_store_returns_self(self) -> None:
+        """Tests that store method returns self"""
+
+        # Define a dummy PyOb class
+        class DummyClass(PyOb):
+            """A dummy PyOb class"""
+
+        # Get dummy store
+        dummy_store = DummyClass._PyObMeta.store
+
+        # Initialize dummy instance
+        d1 = DummyClass()
+
+        # Assert that store method returns self
+        assert id(dummy_store.store(d1)) == id(dummy_store)
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST STORE ADDS PYOB INSTANCE TO COUNTS
     # └─────────────────────────────────────────────────────────────────────────────────
 
@@ -161,6 +181,26 @@ class TestPyObStore:
             == dummy_store.count()
             == 2
         )
+
+    # ┌─────────────────────────────────────────────────────────────────────────────────
+    # │ TEST UNSTORE RETURNS SELF
+    # └─────────────────────────────────────────────────────────────────────────────────
+
+    def test_unstore_returns_self(self) -> None:
+        """Tests that unstore method returns self"""
+
+        # Define a dummy PyOb class
+        class DummyClass(PyOb):
+            """A dummy PyOb class"""
+
+        # Get dummy store
+        dummy_store = DummyClass._PyObMeta.store
+
+        # Initialize dummy instance
+        d1 = DummyClass()
+
+        # Assert that unstore method returns self
+        assert id(dummy_store.unstore(d1)) == id(dummy_store)
 
     # ┌─────────────────────────────────────────────────────────────────────────────────
     # │ TEST UNSTORE REMOVES PYOB INSTANCE FROM COUNTS

@@ -8,7 +8,7 @@ from __future__ import annotations
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.main.functions.store import store_pyob, unstore_pyob
+from pyob.main.functions.helpers import store_pyob, unstore_pyob
 from pyob.meta.classes.pyob_class import PyObClass
 
 

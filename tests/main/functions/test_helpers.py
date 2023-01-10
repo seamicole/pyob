@@ -9,7 +9,7 @@ from unittest.mock import patch
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
-from pyob.main.functions.store import store_pyob, unstore_pyob
+from pyob.main.functions.helpers import store_pyob, unstore_pyob
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

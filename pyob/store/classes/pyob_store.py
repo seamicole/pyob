@@ -11,7 +11,7 @@ from typing import Literal, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.utils.exceptions.validation import InvalidTypeError, UnexpectedTypeError
-from pyob.utils.functions.checkers import is_pyob_instance
+from pyob.utils.functions.validators import is_pyob_instance
 from pyob.utils.mixins.pyobs import PyObs
 
 if TYPE_CHECKING:

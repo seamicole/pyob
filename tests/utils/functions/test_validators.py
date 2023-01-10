@@ -3,7 +3,7 @@
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.main.classes.pyob import PyOb
-from pyob.utils.functions.checkers import is_pyob_instance
+from pyob.utils.functions.validators import is_pyob_instance
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────

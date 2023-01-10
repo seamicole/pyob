@@ -11,7 +11,7 @@ from typing import Generic, Sequence, TYPE_CHECKING, TypeVar
 # └─────────────────────────────────────────────────────────────────────────────────────
 
 from pyob.store.classes.pyob_store import PyObStore
-from pyob.utils.functions.sequence import freezeset
+from pyob.utils.functions.casters import freezeset
 
 if TYPE_CHECKING:
     from pyob.types import Args, Kwargs, PyOb, PyObClass

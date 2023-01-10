@@ -12,7 +12,7 @@ from typing import Sequence, Callable
 # │ PROJECT IMPORTS
 # └─────────────────────────────────────────────────────────────────────────────────────
 
-from pyob.utils.functions.sequence import freezeset
+from pyob.utils.functions.casters import freezeset
 
 
 # ┌─────────────────────────────────────────────────────────────────────────────────────
